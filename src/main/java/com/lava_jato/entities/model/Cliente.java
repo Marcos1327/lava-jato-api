@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_cliente")
@@ -18,6 +19,9 @@ public abstract class Cliente {
     private String observacoes;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCriacao;
+
+    @OneToMany(mappedBy = "proprietario", cascade = CascadeType.ALL,  orphanRemoval = true)
+    private List<Veiculo> veiculos;
 
     @Enumerated(EnumType.STRING)
     private TipoCliente tipoCliente;

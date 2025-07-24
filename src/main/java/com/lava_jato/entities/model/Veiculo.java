@@ -17,7 +17,10 @@ public class Veiculo {
     private String observacao;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCriacao;
-//    private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente proprietario;
 
     public Veiculo() {
     }
@@ -48,11 +51,17 @@ public class Veiculo {
     public void setPlaca(String placa) {
         this.placa = placa;
     }
-
     public String getObservacao() {
         return observacao;
     }
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
+    public LocalDate getDataCriacao() {
+        return dataCriacao;
+    }
+    public void setDataCriacao(LocalDate dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
 }
