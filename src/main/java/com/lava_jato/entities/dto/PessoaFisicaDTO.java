@@ -1,10 +1,18 @@
 package com.lava_jato.entities.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class PessoaFisicaDTO {
 
+    @NotBlank
     private String nome;
+    @NotBlank
     private String telefone;
+    @NotBlank
+    @Email
     private String email;
+
     private String observacoes;
 
     public String getNome() {
