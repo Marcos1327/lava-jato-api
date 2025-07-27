@@ -12,6 +12,4 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-
-
 }
