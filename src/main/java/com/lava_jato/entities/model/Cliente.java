@@ -23,16 +23,12 @@ public abstract class Cliente {
     @OneToMany(mappedBy = "proprietario", cascade = CascadeType.ALL,  orphanRemoval = true)
     private List<Veiculo> veiculos;
 
-    @Enumerated(EnumType.STRING)
-    private TipoCliente tipoCliente;
-
     public Cliente() {}
 
-    public Cliente(String email, String telefone, String observacoes, TipoCliente tipoCliente,  LocalDate dataCriacao) {
+    public Cliente(String email, String telefone, String observacoes,  LocalDate dataCriacao) {
         this.email = email;
         this.telefone = telefone;
         this.observacoes = observacoes;
-        this.tipoCliente = tipoCliente;
         this.dataCriacao = dataCriacao;
     }
 
@@ -67,14 +63,6 @@ public abstract class Cliente {
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
     }
-
-    public TipoCliente getTipoCliente() {
-        return tipoCliente;
-    }
-
-     public void setTipoCliente(TipoCliente tipoCliente) {
-        this.tipoCliente = tipoCliente;
-     }
 
      public LocalDate getDataCriacao() {
         return dataCriacao;
