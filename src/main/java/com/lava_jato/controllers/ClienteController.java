@@ -21,8 +21,8 @@ public class ClienteController {
     }
 
     @PostMapping("/create-pf")
-    public ResponseEntity<PessoaFisica> create(@RequestBody PessoaFisicaDTO pessoaFisicaDTO){
-        return ResponseEntity.ok(clienteService.create(pessoaFisicaDTO));
+    public ResponseEntity<PessoaFisica> createPessoaFisica(@RequestBody PessoaFisicaDTO pessoaFisicaDTO){
+        return ResponseEntity.ok(clienteService.createPessoaFisica(pessoaFisicaDTO));
     }
 
 }

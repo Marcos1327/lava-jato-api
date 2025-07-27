@@ -16,7 +16,7 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    public PessoaFisica create(PessoaFisicaDTO pessoaFisicaDTO) {
+    public PessoaFisica createPessoaFisica(PessoaFisicaDTO pessoaFisicaDTO) {
         PessoaFisica pessoaFisica = new PessoaFisica();
 
         pessoaFisica.setNome(pessoaFisicaDTO.getNome());
