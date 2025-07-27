@@ -72,4 +72,13 @@ public abstract class Cliente {
         this.dataCriacao = dataCriacao;
      }
 
+     public List<Veiculo> getVeiculos() {
+        return veiculos;
+     }
+
+     public void setVeiculos(List<Veiculo> veiculos) {
+        this.veiculos = veiculos;
+     }
+
+
 }
