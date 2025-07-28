@@ -41,8 +41,40 @@ public class VeiculoService {
         return veiculoRepository.save(veiculo);
     }
 
+    public Veiculo updateVeiculo(Long veiculoId, VeiculoDTO veiculoDTO){
+        Veiculo veiculo = findById(veiculoId);
+
+        if(veiculoDTO.getModelo() != null && !veiculo.getModelo().isEmpty()){
+            veiculo.setModelo(veiculoDTO.getModelo());
+        }
+
+        if(veiculoDTO.getPlaca() != null && !veiculo.getPlaca().isEmpty()){
+            veiculo.setPlaca(veiculoDTO.getPlaca());
+        }
+
+        if(veiculoDTO.getObservacao() != null && !veiculo.getObservacao().isEmpty()){
+            veiculo.setObservacao(veiculo.getObservacao());
+        }
+
+        if(veiculoDTO.getProprietarioId() != null){
+            veiculo.setProprietario(clienteService.getClienteById(veiculoDTO.getProprietarioId()));
+        }
+
+        veiculoRepository.save(veiculo);
+        return veiculo;
+    }
+
+    public List<Veiculo> findAllVeiculos(){
+        return veiculoRepository.findAll();
+    }
+
     public Veiculo getById(long veiculoId){
         return findById(veiculoId);
+    }
+
+    public void deleteById(long veiculoId){
+        Veiculo veiculo = findById(veiculoId);
+        veiculoRepository.delete(veiculo);
     }
 
     private void verificaSeExisteVeiculoPelaPlaca(String placa){

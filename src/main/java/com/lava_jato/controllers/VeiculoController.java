@@ -8,6 +8,8 @@ import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/veiculos")
 public class VeiculoController {
@@ -23,8 +25,24 @@ public class VeiculoController {
         return ResponseEntity.ok(veiculoService.createVeiculo(veiculoDTO));
     }
 
+    @PatchMapping("/update/{veiculoId}")
+    public ResponseEntity<Veiculo> update(@PathVariable("veiculoId") Long veiculoId, @RequestBody VeiculoDTO veiculoDTO){
+        return ResponseEntity.ok(veiculoService.updateVeiculo(veiculoId, veiculoDTO));
+    }
+
     @GetMapping("/find-by-id/{veiculoId}")
     public ResponseEntity<Veiculo> findById(@PathVariable Long veiculoId){
         return ResponseEntity.ok(veiculoService.getById(veiculoId));
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<Veiculo>> findAll(){
+        return ResponseEntity.ok(veiculoService.findAllVeiculos());
+    }
+
+    @DeleteMapping("/delete/{veiculoId}")
+    public ResponseEntity<Void> delete(@PathVariable Long veiculoId){
+        veiculoService.deleteById(veiculoId);
+        return ResponseEntity.noContent().build();
     }
 }
