@@ -30,7 +30,7 @@ public class VeiculoService {
     }
 
     public VeiculoResponseDTO createVeiculo(VeiculoDTO veiculoDTO){
-        validarCamposObrigatoriosPessoaFisica(veiculoDTO);
+        validarCamposObrigatoriosVeiculo(veiculoDTO);
         verificaSeExisteVeiculoPelaPlaca(veiculoDTO.getPlaca());
 
         Veiculo veiculo = new Veiculo();
@@ -95,7 +95,7 @@ public class VeiculoService {
     private Veiculo findById(Long veiculoId){
         return veiculoRepository.findById(veiculoId).orElseThrow(() -> new ResourceNotFoundException("Veiculo não encontrato pelo id: " + veiculoId));
     }
-    private void validarCamposObrigatoriosPessoaFisica(VeiculoDTO veiculoDTO) {
+    private void validarCamposObrigatoriosVeiculo(VeiculoDTO veiculoDTO) {
         List<String> camposObrigatorios = new ArrayList<>();
 
         if (Util.isNullOrEmpty(veiculoDTO.getProprietarioId().toString())) {
