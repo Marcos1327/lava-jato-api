@@ -22,7 +22,6 @@ public class Veiculo {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
-//    @JsonBackReference
     private Cliente proprietario;
 
     public Veiculo() {

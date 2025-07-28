@@ -1,6 +1,7 @@
 package com.lava_jato.controllers;
 
 import com.lava_jato.entities.dto.VeiculoDTO;
+import com.lava_jato.entities.dto.responses.VeiculoResponseDTO;
 import com.lava_jato.entities.model.PessoaFisica;
 import com.lava_jato.entities.model.Veiculo;
 import com.lava_jato.services.VeiculoService;
@@ -21,22 +22,22 @@ public class VeiculoController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Veiculo> create(@RequestBody VeiculoDTO veiculoDTO){
+    public ResponseEntity<VeiculoResponseDTO> create(@RequestBody VeiculoDTO veiculoDTO){
         return ResponseEntity.ok(veiculoService.createVeiculo(veiculoDTO));
     }
 
     @PatchMapping("/update/{veiculoId}")
-    public ResponseEntity<Veiculo> update(@PathVariable("veiculoId") Long veiculoId, @RequestBody VeiculoDTO veiculoDTO){
+    public ResponseEntity<VeiculoResponseDTO> update(@PathVariable("veiculoId") Long veiculoId, @RequestBody VeiculoDTO veiculoDTO){
         return ResponseEntity.ok(veiculoService.updateVeiculo(veiculoId, veiculoDTO));
     }
 
     @GetMapping("/find-by-id/{veiculoId}")
-    public ResponseEntity<Veiculo> findById(@PathVariable Long veiculoId){
+    public ResponseEntity<VeiculoResponseDTO> findById(@PathVariable Long veiculoId){
         return ResponseEntity.ok(veiculoService.getById(veiculoId));
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Veiculo>> findAll(){
+    public ResponseEntity<List<VeiculoResponseDTO>> findAll(){
         return ResponseEntity.ok(veiculoService.findAllVeiculos());
     }
 

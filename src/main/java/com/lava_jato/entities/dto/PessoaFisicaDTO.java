@@ -4,7 +4,6 @@ import jakarta.validation.constraints.Email;
 
 public class PessoaFisicaDTO {
 
-
     private String nome;
     private String telefone;
     private String email;
