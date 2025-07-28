@@ -1,6 +1,8 @@
 package com.lava_jato.entities.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -20,23 +22,25 @@ public class Veiculo {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
+//    @JsonBackReference
     private Cliente proprietario;
 
     public Veiculo() {
     }
 
-    public Veiculo(Long veiculoId, String modelo, String placa, String observacao,  LocalDate dataCriacao) {
+    public Veiculo(Long veiculoId, String modelo, String placa, String observacao,  LocalDate dataCriacao,  Cliente proprietario) {
          this.veiculoId = veiculoId;
          this.modelo = modelo;
          this.placa = placa;
          this.observacao = observacao;
          this.dataCriacao = dataCriacao;
+         this.proprietario = proprietario;
     }
 
     public Long getVeiculoId() {
         return veiculoId;
     }
-    public void setVeiculoId(Long veiculoId) {
+    private void setVeiculoId(Long veiculoId) {
         this.veiculoId = veiculoId;
     }
     public String getModelo() {
@@ -62,6 +66,13 @@ public class Veiculo {
     }
     public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
+    }
+
+    public Cliente getProprietario() {
+        return proprietario;
+    }
+    public void setProprietario(Cliente proprietario) {
+        this.proprietario = proprietario;
     }
 
 }

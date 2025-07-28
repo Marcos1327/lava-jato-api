@@ -1,6 +1,7 @@
 package com.lava_jato.entities.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -19,9 +20,6 @@ public abstract class Cliente {
     private String observacoes;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCriacao;
-
-    @OneToMany(mappedBy = "proprietario", cascade = CascadeType.ALL,  orphanRemoval = true)
-    private List<Veiculo> veiculos;
 
     public Cliente() {}
 
@@ -71,14 +69,5 @@ public abstract class Cliente {
      public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
      }
-
-     public List<Veiculo> getVeiculos() {
-        return veiculos;
-     }
-
-     public void setVeiculos(List<Veiculo> veiculos) {
-        this.veiculos = veiculos;
-     }
-
 
 }
