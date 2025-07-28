@@ -24,6 +24,11 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
+    public void deleteCliente(Long clienteId) {
+        Cliente cliente = findClienteById(clienteId);
+        clienteRepository.delete(cliente);
+    }
+
     private Cliente findClienteById(Long clienteId){
         return clienteRepository.findById(clienteId).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado pelo id: " + clienteId));
     }

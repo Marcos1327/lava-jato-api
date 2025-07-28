@@ -59,5 +59,9 @@ public class ClienteController {
         return ResponseEntity.ok(pessoaJuridicaService.findAllPessoaJuridica());
     }
 
-
+    @DeleteMapping("/delete/{clienteId}")
+    public ResponseEntity<Void>  deletePessoaFisica(@PathVariable("clienteId") Long clienteId){
+        clienteService.deleteCliente(clienteId);
+        return ResponseEntity.noContent().build();
+    }
 }
