@@ -42,6 +42,34 @@ public class PessoaJuridicaService {
         return clienteRepository.save(pessoaJuridica);
     }
 
+    public PessoaJuridica updatePessoaJuridica(Long clienteId,PessoaJuridicaDTO pessoaJuridicaDTO) {
+        PessoaJuridica pessoaJuridica =  findPessoaJuridicaById(clienteId);
+
+        if(pessoaJuridicaDTO.getNomeEmpresa() != null && !pessoaJuridicaDTO.getNomeEmpresa().isEmpty()){
+            pessoaJuridica.setNomeEmpresa(pessoaJuridicaDTO.getNomeEmpresa());
+        }
+
+        if(pessoaJuridicaDTO.getNomeResponsavel() != null && !pessoaJuridicaDTO.getNomeResponsavel().isEmpty()){
+            pessoaJuridica.setNomeResponsavel(pessoaJuridicaDTO.getNomeResponsavel());
+        }
+
+        if(pessoaJuridicaDTO.getTelefone() != null && !pessoaJuridicaDTO.getTelefone().isEmpty()){
+            pessoaJuridica.setTelefone(pessoaJuridicaDTO.getTelefone());
+        }
+
+        if(pessoaJuridicaDTO.getEmail() != null && !pessoaJuridicaDTO.getEmail().isEmpty()){
+            pessoaJuridica.setEmail(pessoaJuridicaDTO.getEmail());
+        }
+
+        if(pessoaJuridicaDTO.getObservacoes() != null && !pessoaJuridicaDTO.getObservacoes().isEmpty()){
+            pessoaJuridica.setObservacoes(pessoaJuridicaDTO.getObservacoes());
+        }
+
+        pessoaJuridicaRepository.save(pessoaJuridica);
+        return pessoaJuridica;
+
+    }
+
     public List<PessoaJuridica> findAllPessoaJuridica() {
         return pessoaJuridicaRepository.findAll();
     }

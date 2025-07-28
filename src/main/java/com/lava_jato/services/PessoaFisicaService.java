@@ -3,6 +3,7 @@ package com.lava_jato.services;
 import com.lava_jato.entities.dto.PessoaFisicaDTO;
 import com.lava_jato.entities.model.PessoaFisica;
 import com.lava_jato.exceptions.handlers.BusinessException;
+import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
 import com.lava_jato.exceptions.handlers.ValidationException;
 import com.lava_jato.repositories.ClienteRepository;
 import com.lava_jato.repositories.PessoaFisicaRepository;
@@ -40,8 +41,35 @@ public class PessoaFisicaService {
         return clienteRepository.save(pessoaFisica);
     }
 
+    public PessoaFisica updatePessoaFisica(Long clienteId, PessoaFisicaDTO pessoaFisicaDTO) {
+        PessoaFisica pessoaFisica =  findPessoaFisicaById(clienteId);
+
+        if(pessoaFisicaDTO.getNome() != null && !pessoaFisicaDTO.getNome().isEmpty()){
+            pessoaFisica.setNome(pessoaFisicaDTO.getNome());
+        }
+
+        if(pessoaFisicaDTO.getTelefone() != null && !pessoaFisicaDTO.getTelefone().isEmpty()){
+            pessoaFisicaDTO.setTelefone(pessoaFisicaDTO.getTelefone());
+        }
+
+        if(pessoaFisicaDTO.getEmail() != null && !pessoaFisicaDTO.getEmail().isEmpty()){
+            pessoaFisica.setEmail(pessoaFisicaDTO.getEmail());
+        }
+
+        if(pessoaFisicaDTO.getObservacoes() != null && !pessoaFisicaDTO.getObservacoes().isEmpty()){
+            pessoaFisica.setObservacoes(pessoaFisicaDTO.getObservacoes());
+        }
+
+        pessoaFisicaRepository.save(pessoaFisica);
+        return pessoaFisica;
+    }
+
     public List<PessoaFisica> findAllPessoaFisica(){
         return pessoaFisicaRepository.findAll();
+    }
+
+    private PessoaFisica findPessoaFisicaById(Long clienteId){
+        return pessoaFisicaRepository.findById(clienteId).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado pelo id: " + clienteId));
     }
 
     private void verificaSeExisteClientePeloEmail(String email) {

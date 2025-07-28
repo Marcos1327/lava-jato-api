@@ -59,6 +59,16 @@ public class ClienteController {
         return ResponseEntity.ok(pessoaJuridicaService.findAllPessoaJuridica());
     }
 
+    @PatchMapping("/update-pf/{clienteId}")
+    public ResponseEntity<PessoaFisica> updatePessoaFisica(@PathVariable("clienteId") Long clienteId, @RequestBody PessoaFisicaDTO pessoaFisicaDTO){
+        return ResponseEntity.ok(pessoaFisicaService.updatePessoaFisica(clienteId, pessoaFisicaDTO));
+    }
+
+    @PatchMapping("/update-pj/{clienteId}")
+    public ResponseEntity<PessoaJuridica> updatePessoaJuridica(@PathVariable("clienteId") Long clienteId, @RequestBody PessoaJuridicaDTO pessoaJuridicaDTO){
+        return ResponseEntity.ok(pessoaJuridicaService.updatePessoaJuridica( clienteId, pessoaJuridicaDTO));
+    }
+
     @DeleteMapping("/delete/{clienteId}")
     public ResponseEntity<Void>  deletePessoaFisica(@PathVariable("clienteId") Long clienteId){
         clienteService.deleteCliente(clienteId);
