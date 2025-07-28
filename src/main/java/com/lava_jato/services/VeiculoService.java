@@ -3,6 +3,7 @@ package com.lava_jato.services;
 import com.lava_jato.entities.dto.PessoaFisicaDTO;
 import com.lava_jato.entities.dto.VeiculoDTO;
 import com.lava_jato.entities.model.Veiculo;
+import com.lava_jato.exceptions.handlers.BusinessException;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
 import com.lava_jato.exceptions.handlers.ValidationException;
 import com.lava_jato.repositories.ClienteRepository;
@@ -27,6 +28,8 @@ public class VeiculoService {
 
     public Veiculo createVeiculo(VeiculoDTO veiculoDTO){
         validarCamposObrigatoriosPessoaFisica(veiculoDTO);
+        verificaSeExisteVeiculoPelaPlaca(veiculoDTO.getPlaca());
+
         Veiculo veiculo = new Veiculo();
 
         veiculo.setProprietario(clienteService.getClienteById(veiculoDTO.getProprietarioId()));
@@ -42,6 +45,11 @@ public class VeiculoService {
         return findById(veiculoId);
     }
 
+    private void verificaSeExisteVeiculoPelaPlaca(String placa){
+        if(veiculoRepository.existsVeiculoByPlaca(placa)) {
+            throw new BusinessException("Já existe um veiculo com este Placa.");
+        }
+    }
     private Veiculo findById(Long veiculoId){
         return veiculoRepository.findById(veiculoId).orElseThrow(() -> new ResourceNotFoundException("Veiculo não encontrato pelo id: " + veiculoId));
     }
