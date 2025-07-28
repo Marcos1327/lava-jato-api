@@ -16,7 +16,7 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    public Cliente getPessoaFisicaById(Long clienteId) {
+    public Cliente getClienteById(Long clienteId) {
         return findClienteById(clienteId);
     }
 
@@ -28,6 +28,10 @@ public class ClienteService {
         Cliente cliente = findClienteById(clienteId);
         clienteRepository.delete(cliente);
     }
+
+    //TODO Criar uma busca por nome
+    //TODO Criar uma busca por email
+    //TODO Criar DTO para resposta e não enviar a entidade diretamente
 
     private Cliente findClienteById(Long clienteId){
         return clienteRepository.findById(clienteId).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado pelo id: " + clienteId));

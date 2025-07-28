@@ -41,7 +41,7 @@ public class ClienteController {
 
     @GetMapping("/findById/{clienteId}")
     public ResponseEntity<Cliente> findClienteById(@PathVariable("clienteId") Long clienteId){
-         return ResponseEntity.ok(clienteService.getPessoaFisicaById(clienteId));
+         return ResponseEntity.ok(clienteService.getClienteById(clienteId));
     }
 
     @GetMapping("/")
