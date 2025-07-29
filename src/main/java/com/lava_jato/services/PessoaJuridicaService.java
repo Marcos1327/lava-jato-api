@@ -1,6 +1,8 @@
 package com.lava_jato.services;
 
 import com.lava_jato.entities.dto.PessoaJuridicaDTO;
+import com.lava_jato.entities.dto.responses.PessoaJuridicaResponseDTO;
+import com.lava_jato.entities.mapstructs.PessoaJuridicaMapper;
 import com.lava_jato.entities.model.PessoaJuridica;
 import com.lava_jato.exceptions.handlers.BusinessException;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
@@ -13,19 +15,22 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PessoaJuridicaService {
 
     private final ClienteRepository clienteRepository;
     private final PessoaJuridicaRepository pessoaJuridicaRepository;
+    private final PessoaJuridicaMapper pessoaJuridicaMapper;
 
-    public  PessoaJuridicaService(ClienteRepository clienteRepository, PessoaJuridicaRepository pessoaJuridicaRepository) {
+    public  PessoaJuridicaService(ClienteRepository clienteRepository, PessoaJuridicaRepository pessoaJuridicaRepository, PessoaJuridicaMapper pessoaJuridicaMapper) {
         this.clienteRepository = clienteRepository;
         this.pessoaJuridicaRepository = pessoaJuridicaRepository;
+        this.pessoaJuridicaMapper = pessoaJuridicaMapper;
     }
 
-    public PessoaJuridica createPessoaJuridica(PessoaJuridicaDTO pessoaJuridicaDTO) {
+    public PessoaJuridicaResponseDTO createPessoaJuridica(PessoaJuridicaDTO pessoaJuridicaDTO) {
         validarCamposObrigatoriosPessoaJuridica(pessoaJuridicaDTO);
         Util.validarEmail(pessoaJuridicaDTO.getEmail());
         verificaSeExisteClientePeloEmail(pessoaJuridicaDTO.getEmail());
@@ -39,10 +44,13 @@ public class PessoaJuridicaService {
         pessoaJuridica.setObservacoes(pessoaJuridicaDTO.getObservacoes());
         pessoaJuridica.setDataCriacao(LocalDate.now());
 
-        return clienteRepository.save(pessoaJuridica);
+        PessoaJuridica pessoaJuridicaSalva = pessoaJuridicaRepository.save(pessoaJuridica);
+        PessoaJuridicaResponseDTO pessoaJuridicaResponseDTO = pessoaJuridicaMapper.toResponseDTO(pessoaJuridicaSalva);
+
+        return pessoaJuridicaResponseDTO;
     }
 
-    public PessoaJuridica updatePessoaJuridica(Long clienteId,PessoaJuridicaDTO pessoaJuridicaDTO) {
+    public PessoaJuridicaResponseDTO updatePessoaJuridica(Long clienteId,PessoaJuridicaDTO pessoaJuridicaDTO) {
         PessoaJuridica pessoaJuridica =  findPessoaJuridicaById(clienteId);
 
         if(pessoaJuridicaDTO.getNomeEmpresa() != null && !pessoaJuridicaDTO.getNomeEmpresa().isEmpty()){
@@ -65,13 +73,17 @@ public class PessoaJuridicaService {
             pessoaJuridica.setObservacoes(pessoaJuridicaDTO.getObservacoes());
         }
 
-        pessoaJuridicaRepository.save(pessoaJuridica);
-        return pessoaJuridica;
+        PessoaJuridica pessoaJuridicaAtualizada = pessoaJuridicaRepository.save(pessoaJuridica);
+        PessoaJuridicaResponseDTO pessoaJuridicaResponseDTO = pessoaJuridicaMapper.toResponseDTO(pessoaJuridicaAtualizada);
+
+        return pessoaJuridicaResponseDTO;
 
     }
 
-    public List<PessoaJuridica> findAllPessoaJuridica() {
-        return pessoaJuridicaRepository.findAll();
+    public List<PessoaJuridicaResponseDTO> findAllPessoaJuridica() {
+        List<PessoaJuridica>  pessoasJuridicas =  pessoaJuridicaRepository.findAll();
+        List<PessoaJuridicaResponseDTO> pessoasJuridicasResponse = pessoasJuridicas.stream().map(pessoaJuridicaMapper::toResponseDTO).collect(Collectors.toList());
+        return pessoasJuridicasResponse;
     }
 
     private PessoaJuridica findPessoaJuridicaById(Long clienteId) {

@@ -1,6 +1,8 @@
 package com.lava_jato.services;
 
 import com.lava_jato.entities.dto.PessoaFisicaDTO;
+import com.lava_jato.entities.dto.responses.PessoaFisicaResponseDTO;
+import com.lava_jato.entities.mapstructs.PessoaFisicaMapper;
 import com.lava_jato.entities.model.PessoaFisica;
 import com.lava_jato.exceptions.handlers.BusinessException;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
@@ -13,19 +15,22 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PessoaFisicaService {
 
     private final ClienteRepository clienteRepository;
     private final PessoaFisicaRepository pessoaFisicaRepository;
+    private final PessoaFisicaMapper pessoaFisicaMapper;
 
-    public  PessoaFisicaService(ClienteRepository clienteRepository, PessoaFisicaRepository pessoaFisicaRepository) {
+    public  PessoaFisicaService(ClienteRepository clienteRepository, PessoaFisicaRepository pessoaFisicaRepository, PessoaFisicaMapper pessoaFisicaMapper) {
         this.clienteRepository = clienteRepository;
         this.pessoaFisicaRepository = pessoaFisicaRepository;
+        this.pessoaFisicaMapper = pessoaFisicaMapper;
     }
 
-    public PessoaFisica createPessoaFisica(PessoaFisicaDTO pessoaFisicaDTO) {
+    public PessoaFisicaResponseDTO createPessoaFisica(PessoaFisicaDTO pessoaFisicaDTO) {
         validarCamposObrigatoriosPessoaFisica(pessoaFisicaDTO);
         Util.validarEmail(pessoaFisicaDTO.getEmail());
         verificaSeExisteClientePeloEmail(pessoaFisicaDTO.getEmail());
@@ -38,10 +43,13 @@ public class PessoaFisicaService {
         pessoaFisica.setObservacoes(pessoaFisicaDTO.getObservacoes());
         pessoaFisica.setDataCriacao(LocalDate.now());
 
-        return clienteRepository.save(pessoaFisica);
+        PessoaFisica pessoaFisicaSalva = pessoaFisicaRepository.save(pessoaFisica);
+        PessoaFisicaResponseDTO pessoaFisicaResponse = pessoaFisicaMapper.toResponseDTO(pessoaFisicaSalva);
+
+        return pessoaFisicaResponse;
     }
 
-    public PessoaFisica updatePessoaFisica(Long clienteId, PessoaFisicaDTO pessoaFisicaDTO) {
+    public PessoaFisicaResponseDTO updatePessoaFisica(Long clienteId, PessoaFisicaDTO pessoaFisicaDTO) {
         PessoaFisica pessoaFisica =  findPessoaFisicaById(clienteId);
 
         if(pessoaFisicaDTO.getNome() != null && !pessoaFisicaDTO.getNome().isEmpty()){
@@ -60,12 +68,15 @@ public class PessoaFisicaService {
             pessoaFisica.setObservacoes(pessoaFisicaDTO.getObservacoes());
         }
 
-        pessoaFisicaRepository.save(pessoaFisica);
-        return pessoaFisica;
+        PessoaFisica pessoaFisicaAtualizada = pessoaFisicaRepository.save(pessoaFisica);
+        PessoaFisicaResponseDTO pessoaFisicaResponse = pessoaFisicaMapper.toResponseDTO(pessoaFisicaAtualizada);
+        return pessoaFisicaResponse;
     }
 
-    public List<PessoaFisica> findAllPessoaFisica(){
-        return pessoaFisicaRepository.findAll();
+    public List<PessoaFisicaResponseDTO> findAllPessoaFisica(){
+        List<PessoaFisica> pessoasFisicas = pessoaFisicaRepository.findAll();
+        List<PessoaFisicaResponseDTO> pessoasFisicasFisicasList = pessoasFisicas.stream().map(pessoaFisicaMapper::toResponseDTO).collect(Collectors.toList());
+        return pessoasFisicasFisicasList;
     }
 
     private PessoaFisica findPessoaFisicaById(Long clienteId){

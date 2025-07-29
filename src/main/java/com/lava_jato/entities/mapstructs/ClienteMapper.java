@@ -11,10 +11,13 @@ import org.mapstruct.MappingConstants;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ClienteMapper {
 
+
+
     default ClienteResumoDTO toResumoDTO(Cliente cliente) {
         if (cliente == null) return null;
         ClienteResumoDTO dto = new ClienteResumoDTO();
         dto.setClienteId(cliente.getClienteId());
+        dto.setEmail(cliente.getEmail());
 
         if (cliente instanceof PessoaFisica pf) {
             dto.setNome(pf.getNome());

@@ -3,6 +3,7 @@ package com.lava_jato.entities.dto;
 public class ClienteResumoDTO {
     private Long clienteId;
     private String nome;
+    private String email;
 
     public Long getClienteId() {
         return clienteId;
@@ -18,5 +19,13 @@ public class ClienteResumoDTO {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

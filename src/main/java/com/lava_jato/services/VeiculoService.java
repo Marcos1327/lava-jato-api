@@ -35,7 +35,7 @@ public class VeiculoService {
 
         Veiculo veiculo = new Veiculo();
 
-        veiculo.setProprietario(clienteService.getClienteById(veiculoDTO.getProprietarioId()));
+        veiculo.setProprietario(clienteService.getClienteByIdEntity(veiculoDTO.getProprietarioId()));
         veiculo.setModelo(veiculoDTO.getModelo());
         veiculo.setPlaca(veiculoDTO.getPlaca());
         veiculo.setObservacao(veiculoDTO.getObservacao());
@@ -63,7 +63,7 @@ public class VeiculoService {
         }
 
         if(veiculoDTO.getProprietarioId() != null){
-            veiculo.setProprietario(clienteService.getClienteById(veiculoDTO.getProprietarioId()));
+            veiculo.setProprietario(clienteService.getClienteByIdEntity(veiculoDTO.getProprietarioId()));
         }
 
         Veiculo veiculoAtualizado = veiculoRepository.save(veiculo);

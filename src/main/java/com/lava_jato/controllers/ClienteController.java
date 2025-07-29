@@ -1,7 +1,10 @@
 package com.lava_jato.controllers;
 
+import com.lava_jato.entities.dto.ClienteResumoDTO;
 import com.lava_jato.entities.dto.PessoaFisicaDTO;
 import com.lava_jato.entities.dto.PessoaJuridicaDTO;
+import com.lava_jato.entities.dto.responses.PessoaFisicaResponseDTO;
+import com.lava_jato.entities.dto.responses.PessoaJuridicaResponseDTO;
 import com.lava_jato.entities.model.Cliente;
 import com.lava_jato.entities.model.PessoaFisica;
 import com.lava_jato.entities.model.PessoaJuridica;
@@ -30,42 +33,42 @@ public class ClienteController {
     }
 
     @PostMapping("/create-pf")
-    public ResponseEntity<PessoaFisica> createPessoaFisica(@RequestBody PessoaFisicaDTO pessoaFisicaDTO){
+    public ResponseEntity<PessoaFisicaResponseDTO> createPessoaFisica(@RequestBody PessoaFisicaDTO pessoaFisicaDTO){
         return ResponseEntity.ok(pessoaFisicaService.createPessoaFisica(pessoaFisicaDTO));
     }
 
     @PostMapping("/create-pj")
-    public ResponseEntity<PessoaJuridica> createPessoaJuridica(@RequestBody PessoaJuridicaDTO pessoaJuridicaDTO){
+    public ResponseEntity<PessoaJuridicaResponseDTO> createPessoaJuridica(@RequestBody PessoaJuridicaDTO pessoaJuridicaDTO){
         return ResponseEntity.ok(pessoaJuridicaService.createPessoaJuridica(pessoaJuridicaDTO));
     }
 
     @GetMapping("/findById/{clienteId}")
-    public ResponseEntity<Cliente> findClienteById(@PathVariable("clienteId") Long clienteId){
+    public ResponseEntity<ClienteResumoDTO> findClienteById(@PathVariable("clienteId") Long clienteId){
          return ResponseEntity.ok(clienteService.getClienteById(clienteId));
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Cliente>> findAllClientes(){
+    public ResponseEntity<List<ClienteResumoDTO>> findAllClientes(){
         return ResponseEntity.ok(clienteService.findAllClientes());
     }
 
     @GetMapping("/find-all-pf")
-    public ResponseEntity<List<PessoaFisica>> findAllPessoaFisica(){
+    public ResponseEntity<List<PessoaFisicaResponseDTO>> findAllPessoaFisica(){
         return ResponseEntity.ok(pessoaFisicaService.findAllPessoaFisica());
     }
 
     @GetMapping("/find-all-pj")
-    public ResponseEntity<List<PessoaJuridica>> findAllPessoaJuridica(){
+    public ResponseEntity<List<PessoaJuridicaResponseDTO>> findAllPessoaJuridica(){
         return ResponseEntity.ok(pessoaJuridicaService.findAllPessoaJuridica());
     }
 
     @PatchMapping("/update-pf/{clienteId}")
-    public ResponseEntity<PessoaFisica> updatePessoaFisica(@PathVariable("clienteId") Long clienteId, @RequestBody PessoaFisicaDTO pessoaFisicaDTO){
+    public ResponseEntity<PessoaFisicaResponseDTO> updatePessoaFisica(@PathVariable("clienteId") Long clienteId, @RequestBody PessoaFisicaDTO pessoaFisicaDTO){
         return ResponseEntity.ok(pessoaFisicaService.updatePessoaFisica(clienteId, pessoaFisicaDTO));
     }
 
     @PatchMapping("/update-pj/{clienteId}")
-    public ResponseEntity<PessoaJuridica> updatePessoaJuridica(@PathVariable("clienteId") Long clienteId, @RequestBody PessoaJuridicaDTO pessoaJuridicaDTO){
+    public ResponseEntity<PessoaJuridicaResponseDTO> updatePessoaJuridica(@PathVariable("clienteId") Long clienteId, @RequestBody PessoaJuridicaDTO pessoaJuridicaDTO){
         return ResponseEntity.ok(pessoaJuridicaService.updatePessoaJuridica( clienteId, pessoaJuridicaDTO));
     }
 
