@@ -11,7 +11,7 @@ public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productId;
+    private Long produtoId;
     private String nomeProduto;
     private Integer quantidadeProduto;
     private Double precoProduto;
@@ -28,12 +28,12 @@ public class Produto {
         this.observacao = observacao;
     }
 
-    public Long getProductId() {
-        return productId;
+    public Long getProdutoId() {
+        return produtoId;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProdutoId(Long produtoId) {
+        this.produtoId = produtoId;
     }
 
     public String getNomeProduto() {
