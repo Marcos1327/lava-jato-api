@@ -1,5 +1,7 @@
 package com.lava_jato.entities.dto.responses;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 
 public class PessoaJuridicaResponseDTO {
@@ -9,6 +11,7 @@ public class PessoaJuridicaResponseDTO {
     private String email;
     private String telefone;
     private String observacoes;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCriacao;
 
 

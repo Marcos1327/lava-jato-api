@@ -1,5 +1,6 @@
 package com.lava_jato.entities.dto.responses;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lava_jato.entities.dto.ClienteResumoDTO;
 
@@ -10,6 +11,7 @@ public class VeiculoResponseDTO {
     private String modelo;
     private String placa;
     private String observacao;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCriacao;
     private ClienteResumoDTO proprietario;
 

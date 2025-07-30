@@ -1,5 +1,7 @@
 package com.lava_jato.entities.dto.responses;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 
 public class ProdutoResponseDTO {
@@ -8,6 +10,7 @@ public class ProdutoResponseDTO {
     private String nomeProduto;
     private Double precoProduto;
     private String observacao;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro;
 
     public Long getProdutoId() {

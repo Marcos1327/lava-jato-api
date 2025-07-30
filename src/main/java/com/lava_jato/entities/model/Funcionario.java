@@ -1,5 +1,6 @@
 package com.lava_jato.entities.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -14,18 +15,21 @@ public class Funcionario {
     private String cargo;
     private String telefone;
     private String observacoes;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCriacao;
-    private Boolean isTemporario = false;
+    private Boolean isTemporario;
+    private String vinculo;
 
     public Funcionario() {}
 
-    public Funcionario(String nome, String cargo, String telefone, String observacoes, LocalDate dataCriacao, Boolean isTemporario) {
+    public Funcionario(String nome, String cargo, String telefone, String observacoes, LocalDate dataCriacao, Boolean isTemporario,  String vinculo) {
         this.nome = nome;
         this.cargo = cargo;
         this.telefone = telefone;
         this.observacoes = observacoes;
         this.isTemporario = isTemporario;
         this.dataCriacao = dataCriacao;
+        this.vinculo = vinculo;
     }
 
     public Long getFuncionarioId() {
@@ -64,10 +68,18 @@ public class Funcionario {
     public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
-    public Boolean getIsTemporario() {
+    public Boolean getTemporario() {
         return isTemporario;
     }
-    public void setIsTemporario(Boolean isTemporario) {
+    public void setTemporario(Boolean isTemporario) {
         this.isTemporario = isTemporario;
+    }
+
+    public String getVinculo() {
+        return vinculo;
+    }
+
+    public void setVinculo(String vinculo) {
+        this.vinculo = vinculo;
     }
 }

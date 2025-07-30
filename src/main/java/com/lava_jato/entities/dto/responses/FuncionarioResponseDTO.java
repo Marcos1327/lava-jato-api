@@ -4,21 +4,22 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
 
-public class PessoaFisicaResponseDTO {
-    private Long clienteId;
+public class FuncionarioResponseDTO {
+    private Long funcionarioId;
     private String nome;
-    private String email;
+    private String cargo;
+    private String vinculo;
     private String telefone;
     private String observacoes;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCriacao;
 
-    public Long getClienteId() {
-        return clienteId;
+    public Long getFuncionarioId() {
+        return funcionarioId;
     }
 
-    public void setClienteId(Long clienteId) {
-        this.clienteId = clienteId;
+    public void setFuncionarioId(Long funcionarioId) {
+        this.funcionarioId = funcionarioId;
     }
 
     public String getNome() {
@@ -29,12 +30,12 @@ public class PessoaFisicaResponseDTO {
         this.nome = nome;
     }
 
-    public String getEmail() {
-        return email;
+    public String getCargo() {
+        return cargo;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
 
     public String getTelefone() {
@@ -59,5 +60,13 @@ public class PessoaFisicaResponseDTO {
 
     public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
+    }
+
+    public String getVinculo() {
+        return vinculo;
+    }
+
+    public void setVinculo(String vinculo) {
+        this.vinculo = vinculo;
     }
 }

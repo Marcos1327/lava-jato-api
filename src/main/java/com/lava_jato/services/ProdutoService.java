@@ -5,6 +5,7 @@ import com.lava_jato.entities.dto.VeiculoDTO;
 import com.lava_jato.entities.dto.responses.ProdutoResponseDTO;
 import com.lava_jato.entities.mapstructs.ProdutoMapper;
 import com.lava_jato.entities.model.Produto;
+import com.lava_jato.exceptions.handlers.BusinessException;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
 import com.lava_jato.exceptions.handlers.ValidationException;
 import com.lava_jato.repositories.ProdutoRepository;
@@ -29,6 +30,7 @@ public class ProdutoService {
 
     public ProdutoResponseDTO createProduto(ProdutoDTO produtoDTO){
         validarCamposObrigatoriosProduto(produtoDTO);
+        verificaSeExisteProdutoPeloNome(produtoDTO.getNomeProduto());
 
         Produto produto = new Produto();
 
@@ -82,7 +84,11 @@ public class ProdutoService {
     private Produto findById(Long produtoId){
         return produtoRepository.findById(produtoId).orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado pelo Id : " + produtoId));
     }
-
+    private void verificaSeExisteProdutoPeloNome(String nomeProduto){
+        if(produtoRepository.existsProdutoByNomeProduto(nomeProduto)){
+            throw new BusinessException("Já existe um produto com esse nome " + nomeProduto);
+        }
+    }
     private void validarCamposObrigatoriosProduto(ProdutoDTO produtoDTO) {
         List<String> camposObrigatorios = new ArrayList<>();
 
