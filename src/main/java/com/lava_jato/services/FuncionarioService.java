@@ -1,11 +1,9 @@
 package com.lava_jato.services;
 
 import com.lava_jato.entities.dto.FuncionarioDTO;
-import com.lava_jato.entities.dto.PessoaFisicaDTO;
 import com.lava_jato.entities.dto.responses.FuncionarioResponseDTO;
 import com.lava_jato.entities.mapstructs.FuncionarioMapper;
 import com.lava_jato.entities.model.Funcionario;
-import com.lava_jato.entities.model.Produto;
 import com.lava_jato.exceptions.handlers.BusinessException;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
 import com.lava_jato.exceptions.handlers.ValidationException;
@@ -39,7 +37,7 @@ public class FuncionarioService {
         funcionario.setCargo(funcionarioDTO.getCargo());
         funcionario.setTelefone(funcionarioDTO.getTelefone());
         funcionario.setObservacoes(funcionarioDTO.getObservacoes());
-        funcionario.setTemporario(funcionarioDTO.getTemporario());
+        funcionario.setIsTemporario(funcionarioDTO.getIsTemporario());
         funcionario.setVinculo(definirVinculo(funcionario));
         funcionario.setDataCriacao(LocalDate.now());
 
@@ -64,8 +62,8 @@ public class FuncionarioService {
         if(funcionarioDTO.getObservacoes() != null && !funcionarioDTO.getObservacoes().isEmpty()) {
             funcionario.setObservacoes(funcionarioDTO.getObservacoes());
         }
-        if(funcionarioDTO.getTemporario() != null) {
-            funcionario.setTemporario(funcionarioDTO.getTemporario());
+        if(funcionarioDTO.getIsTemporario() != null) {
+            funcionario.setIsTemporario(funcionarioDTO.getIsTemporario());
             funcionario.setVinculo(definirVinculo(funcionario));
         }
 
@@ -91,7 +89,7 @@ public class FuncionarioService {
     }
 
     private String definirVinculo(Funcionario funcionario) {
-        return funcionario.getTemporario() ? "Freelancer" : "Efetivo";
+        return funcionario.getIsTemporario() ? "Freelancer" : "Efetivo";
     }
     private Funcionario findById (Long funcionarioId ) {
        return funcionarioRepository.findById(funcionarioId).orElseThrow(() ->
@@ -108,6 +106,9 @@ public class FuncionarioService {
         }
         if (Util.isNullOrEmpty(funcionarioDTO.getCargo())) {
             camposObrigatorios.add("Função");
+        }
+        if (Util.isNullOrEmpty(funcionarioDTO.getIsTemporario())) {
+            camposObrigatorios.add("Vínculo");
         }
 
         if (!camposObrigatorios.isEmpty()) {

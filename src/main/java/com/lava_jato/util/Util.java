@@ -2,9 +2,7 @@ package com.lava_jato.util;
 
 import com.lava_jato.exceptions.handlers.BusinessException;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
 
 @Component
 public class Util {
@@ -18,5 +16,9 @@ public class Util {
         if(!emailValidator.isValid(email)){
             throw new BusinessException("E-mail invalido");
         }
+    }
+
+    public static boolean isNullOrEmpty(Boolean temporario) {
+        return temporario == null;
     }
 }

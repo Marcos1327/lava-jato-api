@@ -5,7 +5,7 @@ public class FuncionarioDTO {
     private String cargo;
     private String telefone;
     private String observacoes;
-    private Boolean temporario;
+    private Boolean isTemporario;
 
     public String getNome() {
         return nome;
@@ -39,11 +39,11 @@ public class FuncionarioDTO {
         this.observacoes = observacoes;
     }
 
-    public Boolean getTemporario() {
-        return temporario;
+    public Boolean getIsTemporario() {
+        return isTemporario;
     }
 
-    public void setTemporario(Boolean temporario) {
-        this.temporario = temporario;
+    public void setIsTemporario(Boolean temporario) {
+        isTemporario = temporario;
     }
 }

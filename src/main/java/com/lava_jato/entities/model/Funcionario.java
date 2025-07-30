@@ -68,11 +68,13 @@ public class Funcionario {
     public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
-    public Boolean getTemporario() {
+
+    public Boolean getIsTemporario() {
         return isTemporario;
     }
-    public void setTemporario(Boolean isTemporario) {
-        this.isTemporario = isTemporario;
+
+    public void setIsTemporario(Boolean temporario) {
+        isTemporario = temporario;
     }
 
     public String getVinculo() {
