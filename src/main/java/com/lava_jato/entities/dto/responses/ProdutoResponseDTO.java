@@ -9,6 +9,7 @@ public class ProdutoResponseDTO {
     private Long produtoId;
     private String nomeProduto;
     private Double precoProduto;
+    private Integer quantidadeProduto;
     private String observacao;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro;
@@ -51,5 +52,13 @@ public class ProdutoResponseDTO {
 
     public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public Integer getQuantidadeProduto() {
+        return quantidadeProduto;
+    }
+
+    public void setQuantidadeProduto(Integer quantidadeProduto) {
+        this.quantidadeProduto = quantidadeProduto;
     }
 }

@@ -1,29 +1,13 @@
-package com.lava_jato.entities.model;
-
-import jakarta.persistence.*;
+package com.lava_jato.entities.dto.responses;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "tb_tipo_servico")
-public class TipoServico {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class TipoServicoResponseDTO {
     private Long tipoServicoId;
     private String nomeServico;
     private Double precoServico;
     private String observacao;
     private LocalDate dataCriacao;
-
-    public TipoServico() {}
-
-    public TipoServico(String nomeServico, Double precoServico, String observacao, LocalDate dataCriacao ) {
-         this.nomeServico = nomeServico;
-         this.precoServico = precoServico;
-         this.observacao = observacao;
-         this.dataCriacao = dataCriacao;
-    }
 
     public Long getTipoServicoId() {
         return tipoServicoId;
