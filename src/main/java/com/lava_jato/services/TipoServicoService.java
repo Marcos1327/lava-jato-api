@@ -10,6 +10,7 @@ import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
 import com.lava_jato.exceptions.handlers.ValidationException;
 import com.lava_jato.repositories.TipoServicoRepository;
 import com.lava_jato.util.Util;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -28,6 +29,7 @@ public class TipoServicoService {
         this.tipoServicoMapper = tipoServicoMapper;
     }
 
+    @Transactional
     public TipoServicoResponseDTO create(TipoServicoDTO tipoServicoDTO) {
         validarCamposObrigatoriosServico(tipoServicoDTO);
         existTipoServicoByName(tipoServicoDTO.getNomeServico());
@@ -46,6 +48,7 @@ public class TipoServicoService {
         return responseDTO;
     }
 
+    @Transactional
     public TipoServicoResponseDTO update (Integer tipoServicoId, TipoServicoDTO tipoServicoDTO) {
         TipoServico tipoServico = findById(tipoServicoId);
 
@@ -75,6 +78,7 @@ public class TipoServicoService {
         return tipoServicoMapper.toResponseDTO(servico);
     }
 
+    @Transactional
     public void deleteById(Integer tipoServicoId){
         TipoServico servico = findById(tipoServicoId);
         tipoServicoRepository.delete(servico);

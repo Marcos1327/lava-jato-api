@@ -10,6 +10,7 @@ import com.lava_jato.exceptions.handlers.ValidationException;
 import com.lava_jato.repositories.ClienteRepository;
 import com.lava_jato.repositories.PessoaFisicaRepository;
 import com.lava_jato.util.Util;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,6 +31,7 @@ public class PessoaFisicaService {
         this.pessoaFisicaMapper = pessoaFisicaMapper;
     }
 
+    @Transactional
     public PessoaFisicaResponseDTO createPessoaFisica(PessoaFisicaDTO pessoaFisicaDTO) {
         validarCamposObrigatoriosPessoaFisica(pessoaFisicaDTO);
         Util.validarEmail(pessoaFisicaDTO.getEmail());
@@ -43,12 +45,13 @@ public class PessoaFisicaService {
         pessoaFisica.setObservacoes(pessoaFisicaDTO.getObservacoes());
         pessoaFisica.setDataCriacao(LocalDate.now());
 
-        PessoaFisica pessoaFisicaSalva = pessoaFisicaRepository.save(pessoaFisica);
-        PessoaFisicaResponseDTO pessoaFisicaResponse = pessoaFisicaMapper.toResponseDTO(pessoaFisicaSalva);
+        pessoaFisicaRepository.save(pessoaFisica);
+        PessoaFisicaResponseDTO pessoaFisicaResponse = pessoaFisicaMapper.toResponseDTO(pessoaFisica);
 
         return pessoaFisicaResponse;
     }
 
+    @Transactional
     public PessoaFisicaResponseDTO updatePessoaFisica(Long clienteId, PessoaFisicaDTO pessoaFisicaDTO) {
         PessoaFisica pessoaFisica =  findPessoaFisicaById(clienteId);
 
@@ -68,8 +71,8 @@ public class PessoaFisicaService {
             pessoaFisica.setObservacoes(pessoaFisicaDTO.getObservacoes());
         }
 
-        PessoaFisica pessoaFisicaAtualizada = pessoaFisicaRepository.save(pessoaFisica);
-        PessoaFisicaResponseDTO pessoaFisicaResponse = pessoaFisicaMapper.toResponseDTO(pessoaFisicaAtualizada);
+        pessoaFisicaRepository.save(pessoaFisica);
+        PessoaFisicaResponseDTO pessoaFisicaResponse = pessoaFisicaMapper.toResponseDTO(pessoaFisica);
         return pessoaFisicaResponse;
     }
 

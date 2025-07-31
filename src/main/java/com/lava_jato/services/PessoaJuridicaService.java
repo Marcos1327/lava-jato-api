@@ -10,6 +10,7 @@ import com.lava_jato.exceptions.handlers.ValidationException;
 import com.lava_jato.repositories.ClienteRepository;
 import com.lava_jato.repositories.PessoaJuridicaRepository;
 import com.lava_jato.util.Util;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,6 +31,7 @@ public class PessoaJuridicaService {
         this.pessoaJuridicaMapper = pessoaJuridicaMapper;
     }
 
+    @Transactional
     public PessoaJuridicaResponseDTO createPessoaJuridica(PessoaJuridicaDTO pessoaJuridicaDTO) {
         validarCamposObrigatoriosPessoaJuridica(pessoaJuridicaDTO);
         Util.validarEmail(pessoaJuridicaDTO.getEmail());
@@ -44,12 +46,13 @@ public class PessoaJuridicaService {
         pessoaJuridica.setObservacoes(pessoaJuridicaDTO.getObservacoes());
         pessoaJuridica.setDataCriacao(LocalDate.now());
 
-        PessoaJuridica pessoaJuridicaSalva = pessoaJuridicaRepository.save(pessoaJuridica);
-        PessoaJuridicaResponseDTO pessoaJuridicaResponseDTO = pessoaJuridicaMapper.toResponseDTO(pessoaJuridicaSalva);
+        pessoaJuridicaRepository.save(pessoaJuridica);
+        PessoaJuridicaResponseDTO pessoaJuridicaResponseDTO = pessoaJuridicaMapper.toResponseDTO(pessoaJuridica);
 
         return pessoaJuridicaResponseDTO;
     }
 
+    @Transactional
     public PessoaJuridicaResponseDTO updatePessoaJuridica(Long clienteId,PessoaJuridicaDTO pessoaJuridicaDTO) {
         PessoaJuridica pessoaJuridica =  findPessoaJuridicaById(clienteId);
 
@@ -73,8 +76,8 @@ public class PessoaJuridicaService {
             pessoaJuridica.setObservacoes(pessoaJuridicaDTO.getObservacoes());
         }
 
-        PessoaJuridica pessoaJuridicaAtualizada = pessoaJuridicaRepository.save(pessoaJuridica);
-        PessoaJuridicaResponseDTO pessoaJuridicaResponseDTO = pessoaJuridicaMapper.toResponseDTO(pessoaJuridicaAtualizada);
+        pessoaJuridicaRepository.save(pessoaJuridica);
+        PessoaJuridicaResponseDTO pessoaJuridicaResponseDTO = pessoaJuridicaMapper.toResponseDTO(pessoaJuridica);
 
         return pessoaJuridicaResponseDTO;
 

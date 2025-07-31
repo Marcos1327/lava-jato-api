@@ -10,6 +10,7 @@ import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
 import com.lava_jato.exceptions.handlers.ValidationException;
 import com.lava_jato.repositories.ProdutoRepository;
 import com.lava_jato.util.Util;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -28,6 +29,7 @@ public class ProdutoService {
         this.produtoMapper = produtoMapper;
     }
 
+    @Transactional
     public ProdutoResponseDTO createProduto(ProdutoDTO produtoDTO){
         validarCamposObrigatoriosProduto(produtoDTO);
         verificaSeExisteProdutoPeloNome(produtoDTO.getNomeProduto());
@@ -45,6 +47,7 @@ public class ProdutoService {
         return produtoResponseDTO;
     }
 
+    @Transactional
     public ProdutoResponseDTO updateProduto(Long produtoId, ProdutoDTO produtoDTO){
         Produto produto = findById(produtoId);
 
@@ -76,6 +79,7 @@ public class ProdutoService {
         return produtoMapper.toResponseDTO(produto);
     }
 
+    @Transactional
     public void deleteById(Long produtoId){
         Produto produto  = findById(produtoId);
         produtoRepository.delete(produto);

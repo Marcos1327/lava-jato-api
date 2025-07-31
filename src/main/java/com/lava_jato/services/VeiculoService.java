@@ -9,6 +9,7 @@ import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
 import com.lava_jato.exceptions.handlers.ValidationException;
 import com.lava_jato.repositories.VeiculoRepository;
 import com.lava_jato.util.Util;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -29,6 +30,7 @@ public class VeiculoService {
         this.veiculoMapper = veiculoMapper;
     }
 
+    @Transactional
     public VeiculoResponseDTO createVeiculo(VeiculoDTO veiculoDTO){
         validarCamposObrigatoriosVeiculo(veiculoDTO);
         verificaSeExisteVeiculoPelaPlaca(veiculoDTO.getPlaca());
@@ -47,6 +49,7 @@ public class VeiculoService {
         return veiculoResponseDTO;
     }
 
+    @Transactional
     public VeiculoResponseDTO updateVeiculo(Long veiculoId, VeiculoDTO veiculoDTO){
         Veiculo veiculo = findById(veiculoId);
 
@@ -82,6 +85,7 @@ public class VeiculoService {
         return veiculoMapper.toResponseDTO(veiculo);
     }
 
+    @Transactional
     public void deleteById(long veiculoId){
         Veiculo veiculo = findById(veiculoId);
         veiculoRepository.delete(veiculo);

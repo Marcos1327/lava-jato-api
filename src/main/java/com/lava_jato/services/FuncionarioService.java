@@ -9,6 +9,7 @@ import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
 import com.lava_jato.exceptions.handlers.ValidationException;
 import com.lava_jato.repositories.FuncionarioRepository;
 import com.lava_jato.util.Util;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -27,6 +28,7 @@ public class FuncionarioService {
         this.funcionarioMapper = funcionarioMapper;
     }
 
+    @Transactional
     public FuncionarioResponseDTO create(FuncionarioDTO funcionarioDTO) {
         validarCamposObrigatoriosFuncionario(funcionarioDTO);
         verificarSeExisteFuncionarioPeloNomeETelefone(funcionarioDTO.getNome(), funcionarioDTO.getTelefone());
@@ -47,6 +49,7 @@ public class FuncionarioService {
         return funcionarioResponseDTO;
     }
 
+    @Transactional
     public FuncionarioResponseDTO update(Long funcionarioId, FuncionarioDTO funcionarioDTO) {
         Funcionario funcionario = findById(funcionarioId);
 
@@ -83,6 +86,7 @@ public class FuncionarioService {
         return funcionarioMapper.toResponseDTO(funcionario);
     }
 
+    @Transactional
     public void deleteById(Long funcionarioId){
         Funcionario funcionario  = findById(funcionarioId);
         funcionarioRepository.delete(funcionario);

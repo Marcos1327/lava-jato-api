@@ -5,6 +5,7 @@ import com.lava_jato.entities.mapstructs.ClienteMapper;
 import com.lava_jato.entities.model.Cliente;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
 import com.lava_jato.repositories.ClienteRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class ClienteService {
         return clientes.stream().map(clienteMapper::toResumoDTO).collect(Collectors.toList());
     }
 
+    @Transactional
     public void deleteCliente(Long clienteId) {
         Cliente cliente = findClienteById(clienteId);
         clienteRepository.delete(cliente);
