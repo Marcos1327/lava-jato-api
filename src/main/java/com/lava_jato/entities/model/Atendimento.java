@@ -27,7 +27,10 @@ public class Atendimento {
     private Veiculo veiculo;
 
     @OneToMany(mappedBy = "atendimento", cascade = CascadeType.ALL)
-    private List<ServicoAtendimento> servicoAtendimentos;
+    private List<ServicoAtendimento> servicos;
+
+    @OneToMany(mappedBy = "atendimento", cascade = CascadeType.ALL)
+    private List<ProdutoAtendimento> produtos;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCriacao;
@@ -36,13 +39,14 @@ public class Atendimento {
     public Atendimento() {
     }
 
-    public Atendimento(Long atendimentoId, StatusAtendimento statusAtendimento, Cliente cliente, Veiculo veiculo, LocalDate dataCriacao,  List<ServicoAtendimento> servicoAtendimentos) {
+    public Atendimento(Long atendimentoId, StatusAtendimento statusAtendimento, Cliente cliente, Veiculo veiculo, LocalDate dataCriacao,  List<ServicoAtendimento> servicos, List<ProdutoAtendimento> produtos) {
         this.atendimentoId = atendimentoId;
         this.statusAtendimento = statusAtendimento;
         this.cliente = cliente;
         this.veiculo = veiculo;
         this.dataCriacao = dataCriacao;
-        this.servicoAtendimentos = servicoAtendimentos;
+        this.servicos = servicos;
+        this.produtos = produtos;
     }
 
     public Long getAtendimentoId() {
@@ -85,11 +89,19 @@ public class Atendimento {
         this.dataCriacao = dataCriacao;
     }
 
-    public List<ServicoAtendimento> getServicoAtendimentos() {
-        return servicoAtendimentos;
+    public List<ServicoAtendimento> getServicos() {
+        return servicos;
     }
 
-    public void setServicoAtendimentos(List<ServicoAtendimento> servicoAtendimentos) {
-        this.servicoAtendimentos = servicoAtendimentos;
+    public void setServicos(List<ServicoAtendimento> servicos) {
+        this.servicos = servicos;
+    }
+
+    public List<ProdutoAtendimento> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<ProdutoAtendimento> produtos) {
+        this.produtos = produtos;
     }
 }

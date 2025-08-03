@@ -2,13 +2,14 @@ package com.lava_jato.entities.dto.responses;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class ProdutoResponseDTO {
 
     private Long produtoId;
     private String nomeProduto;
-    private Double precoProduto;
+    private BigDecimal precoProduto;
     private Integer quantidadeProduto;
     private String observacao;
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -30,11 +31,11 @@ public class ProdutoResponseDTO {
         this.nomeProduto = nomeProduto;
     }
 
-    public Double getPrecoProduto() {
+    public BigDecimal getPrecoProduto() {
         return precoProduto;
     }
 
-    public void setPrecoProduto(Double precoProduto) {
+    public void setPrecoProduto(BigDecimal precoProduto) {
         this.precoProduto = precoProduto;
     }
 

@@ -7,6 +7,7 @@ public class AtendimentoDTO {
     private Long clienteId;
     private Long veiculoId;
     private List<ServicoAtendimentoDTO> servicos;
+    private List<ProdutoAtendimentoDTO> produtos;
 
     public Long getClienteId() {
         return clienteId;
@@ -30,5 +31,13 @@ public class AtendimentoDTO {
 
     public void setServicos(List<ServicoAtendimentoDTO> servicos) {
         this.servicos = servicos;
+    }
+
+    public List<ProdutoAtendimentoDTO> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<ProdutoAtendimentoDTO> produtos) {
+        this.produtos = produtos;
     }
 }

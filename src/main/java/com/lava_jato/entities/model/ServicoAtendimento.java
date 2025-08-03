@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+@Table(name = "tb_servico_atendimento")
 public class ServicoAtendimento {
 
     @Id
@@ -12,6 +13,8 @@ public class ServicoAtendimento {
     private Long servicoAtendimentoId;
 
     private String observacao;
+
+    private String nome;
 
     @Column(precision = 10, scale = 2)
     private BigDecimal preco;
@@ -28,9 +31,10 @@ public class ServicoAtendimento {
     public ServicoAtendimento() {
     }
 
-    public ServicoAtendimento(Long servicoAtendimentoId, String observacao, BigDecimal preco, Atendimento atendimento, TipoServico servico) {
+    public ServicoAtendimento(Long servicoAtendimentoId, String observacao, String nome, BigDecimal preco, Atendimento atendimento, TipoServico servico) {
         this.servicoAtendimentoId = servicoAtendimentoId;
         this.observacao = observacao;
+        this.nome = nome;
         this.preco = preco;
         this.atendimento = atendimento;
         this.servico = servico;
@@ -50,6 +54,14 @@ public class ServicoAtendimento {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public BigDecimal getPreco() {

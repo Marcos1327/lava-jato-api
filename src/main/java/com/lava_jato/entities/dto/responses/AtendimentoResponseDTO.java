@@ -1,5 +1,6 @@
 package com.lava_jato.entities.dto.responses;
 
+import com.lava_jato.entities.dto.request.ProdutoAtendimentoDTO;
 import com.lava_jato.entities.dto.request.ServicoAtendimentoDTO;
 import com.lava_jato.entities.enums.StatusAtendimento;
 
@@ -12,8 +13,8 @@ public class AtendimentoResponseDTO {
     private LocalDate dataCriacao;
     private ClienteResumoDTO cliente;
     private VeiculoResumoDTO veiculo;
-    private List<ServicoAtendimentoDTO> servicoAtendimentos;
-
+    private List<ServicoAtendimentoDTO> servicos;
+    private List<ProdutoAtendimentoDTO> produtos;
 
     public Long getAtendimentoId() {
         return atendimentoId;
@@ -55,11 +56,19 @@ public class AtendimentoResponseDTO {
         this.veiculo = veiculo;
     }
 
-    public List<ServicoAtendimentoDTO> getServicoAtendimentos() {
-        return servicoAtendimentos;
+    public List<ServicoAtendimentoDTO> getServicos() {
+        return servicos;
     }
 
-    public void setServicoAtendimentos(List<ServicoAtendimentoDTO> servicoAtendimentos) {
-        this.servicoAtendimentos = servicoAtendimentos;
+    public void setServicos(List<ServicoAtendimentoDTO> servicos) {
+        this.servicos = servicos;
+    }
+
+    public List<ProdutoAtendimentoDTO> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<ProdutoAtendimentoDTO> produtos) {
+        this.produtos = produtos;
     }
 }

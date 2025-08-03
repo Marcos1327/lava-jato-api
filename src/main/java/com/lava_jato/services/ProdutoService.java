@@ -57,7 +57,7 @@ public class ProdutoService {
             produto.setPrecoProduto(produtoDTO.getPrecoProduto());
         }
         if(produtoDTO.getQuantidadeProduto() != null){
-            produto.setQuantidadeProduto(produtoDTO.getQuantidadeProduto());
+            produto.setQuantidadeProduto(produto.getQuantidadeProduto() + produtoDTO.getQuantidadeProduto());
         }
         if(produtoDTO.getObservacao() != null && !produtoDTO.getObservacao().isEmpty()){
             produto.setObservacao(produtoDTO.getObservacao());
@@ -78,6 +78,22 @@ public class ProdutoService {
         return produtoMapper.toResponseDTO(produto);
     }
 
+    public Produto getProdutoByIdEntity(Long produtoId){
+       return findById(produtoId);
+    }
+
+    @Transactional
+    public void consumirEstoque(Produto produto, int quantidadeSolicitada){
+
+        if(produto.getQuantidadeProduto() < quantidadeSolicitada){
+            throw new BusinessException("Estoque insuficiente para o produto: " + produto.getNomeProduto());
+        }
+
+        produto.setQuantidadeProduto(produto.getQuantidadeProduto() - quantidadeSolicitada);
+        produtoRepository.save(produto);
+    }
+
+
     @Transactional
     public void deleteById(Long produtoId){
         Produto produto  = findById(produtoId);
@@ -89,7 +105,7 @@ public class ProdutoService {
     }
     private void verificaSeExisteProdutoPeloNome(String nomeProduto){
         if(produtoRepository.existsProdutoByNomeProduto(nomeProduto)){
-            throw new BusinessException("Já existe um produto com esse nome " + nomeProduto);
+            throw new BusinessException("Já existe um produto com esse nome: " + nomeProduto);
         }
     }
     private void validarCamposObrigatoriosProduto(ProdutoDTO produtoDTO) {

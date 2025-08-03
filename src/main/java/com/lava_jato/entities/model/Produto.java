@@ -3,6 +3,7 @@ package com.lava_jato.entities.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -14,14 +15,15 @@ public class Produto {
     private Long produtoId;
     private String nomeProduto;
     private Integer quantidadeProduto;
-    private Double precoProduto;
+    @Column(precision = 10, scale = 2)
+    private BigDecimal precoProduto;
     private String observacao;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro;
 
     public Produto() {}
 
-    public Produto(String nomeProduto, Integer quantidadeProduto, Double precoProduto, String observacao) {
+    public Produto(String nomeProduto, Integer quantidadeProduto, BigDecimal precoProduto, String observacao) {
         this.nomeProduto = nomeProduto;
         this.quantidadeProduto = quantidadeProduto;
         this.precoProduto = precoProduto;
@@ -52,11 +54,11 @@ public class Produto {
         this.quantidadeProduto = quantidadeProduto;
     }
 
-    public Double getPrecoProduto() {
+    public BigDecimal getPrecoProduto() {
         return precoProduto;
     }
 
-    public void setPrecoProduto(Double precoProduto) {
+    public void setPrecoProduto(BigDecimal precoProduto) {
         this.precoProduto = precoProduto;
     }
     public String getObservacao() {

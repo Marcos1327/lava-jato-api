@@ -1,9 +1,11 @@
 package com.lava_jato.entities.dto.request;
 
+import java.math.BigDecimal;
+
 public class ProdutoDTO {
     private String nomeProduto;
     private Integer quantidadeProduto;
-    private Double  precoProduto;
+    private BigDecimal precoProduto;
     private String observacao;
 
     public String getNomeProduto() {
@@ -22,11 +24,11 @@ public class ProdutoDTO {
         this.quantidadeProduto = quantidadeProduto;
     }
 
-    public Double getPrecoProduto() {
+    public BigDecimal getPrecoProduto() {
         return precoProduto;
     }
 
-    public void setPrecoProduto(Double precoProduto) {
+    public void setPrecoProduto(BigDecimal precoProduto) {
         this.precoProduto = precoProduto;
     }
 

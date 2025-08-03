@@ -1,11 +1,13 @@
 package com.lava_jato.services;
 
 import com.lava_jato.entities.dto.request.AtendimentoDTO;
+import com.lava_jato.entities.dto.request.ProdutoAtendimentoDTO;
 import com.lava_jato.entities.dto.request.ServicoAtendimentoDTO;
 import com.lava_jato.entities.dto.responses.AtendimentoResponseDTO;
 import com.lava_jato.entities.enums.StatusAtendimento;
 import com.lava_jato.entities.mapstructs.AtendimentoMapper;
 import com.lava_jato.entities.model.*;
+import com.lava_jato.exceptions.handlers.BusinessException;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
 import com.lava_jato.repositories.AtendimentoRepository;
 import org.springframework.stereotype.Service;
@@ -21,16 +23,18 @@ public class AtendimentoService {
     private final ClienteService clienteService;
     private final VeiculoService veiculoService;
     private final TipoServicoService tipoServicoService;
+    private final ProdutoService produtoService;
     private final AtendimentoMapper atendimentoMapper;
 
     public AtendimentoService(AtendimentoRepository atendimentoRepository, ClienteService clienteService, VeiculoService veiculoService,
-                              AtendimentoMapper atendimentoMapper, TipoServicoService tipoServicoService) {
+                              AtendimentoMapper atendimentoMapper, TipoServicoService tipoServicoService, ProdutoService produtoService) {
 
         this.atendimentoRepository = atendimentoRepository;
         this.clienteService = clienteService;
         this.veiculoService = veiculoService;
-        this.atendimentoMapper = atendimentoMapper;
         this.tipoServicoService = tipoServicoService;
+        this.produtoService = produtoService;
+        this.atendimentoMapper = atendimentoMapper;
     }
 
     public AtendimentoResponseDTO create(AtendimentoDTO atendimentoDTO) {
@@ -45,7 +49,10 @@ public class AtendimentoService {
         atendimento.setDataCriacao(LocalDate.now());
 
         List<ServicoAtendimento> servicosAtendimento = criarServicosAtendimento(atendimentoDTO, atendimento);
-        atendimento.setServicoAtendimentos(servicosAtendimento);
+        atendimento.setServicos(servicosAtendimento);
+
+        List<ProdutoAtendimento> produtosAtendimento = criarProdutoAtendimento(atendimentoDTO, atendimento);
+        atendimento.setProdutos(produtosAtendimento);
 
         atendimentoRepository.save(atendimento);
         AtendimentoResponseDTO atendimentoResponseDTO = atendimentoMapper.toResponseDTO(atendimento);
@@ -76,6 +83,7 @@ public class AtendimentoService {
 
             ServicoAtendimento servicoAtendimento = new ServicoAtendimento();
             servicoAtendimento.setServico(tipoServico);
+            servicoAtendimento.setNome(tipoServico.getNomeServico());
             servicoAtendimento.setPreco(tipoServico.getPrecoServico());
             servicoAtendimento.setObservacao(servicoDTO.getObservacao());
             servicoAtendimento.setAtendimento(atendimento);
@@ -84,5 +92,25 @@ public class AtendimentoService {
         }
 
         return servicos;
+    }
+
+    private List<ProdutoAtendimento> criarProdutoAtendimento(AtendimentoDTO atendimentoDTO, Atendimento atendimento) {
+        List<ProdutoAtendimento> produtos = new ArrayList<>();
+
+        for(ProdutoAtendimentoDTO produtoAtendimentoDTO : atendimentoDTO.getProdutos()){
+            Produto produto = produtoService.getProdutoByIdEntity(produtoAtendimentoDTO.getProdutoAtendimentoId());
+            produtoService.consumirEstoque(produto, produtoAtendimentoDTO.getQuantidadeProduto());
+
+            ProdutoAtendimento produtoAtendimento = new ProdutoAtendimento();
+            produtoAtendimento.setProduto(produto);
+            produtoAtendimento.setNome(produto.getNomeProduto());
+            produtoAtendimento.setPreco(produto.getPrecoProduto());
+            produtoAtendimento.setQuantidadeProduto(produtoAtendimentoDTO.getQuantidadeProduto());
+            produtoAtendimento.setAtendimento(atendimento);
+
+            produtos.add(produtoAtendimento);
+        }
+
+        return produtos;
     }
 }
