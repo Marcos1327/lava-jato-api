@@ -5,6 +5,7 @@ import com.lava_jato.entities.enums.StatusAtendimento;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_atendimento")
@@ -25,6 +26,9 @@ public class Atendimento {
     @JoinColumn(name = "veiculo_id")
     private Veiculo veiculo;
 
+    @OneToMany(mappedBy = "atendimento", cascade = CascadeType.ALL)
+    private List<ServicoAtendimento> servicoAtendimentos;
+
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCriacao;
 
@@ -32,12 +36,13 @@ public class Atendimento {
     public Atendimento() {
     }
 
-    public Atendimento(Long atendimentoId, StatusAtendimento statusAtendimento, Cliente cliente, Veiculo veiculo, LocalDate dataCriacao) {
+    public Atendimento(Long atendimentoId, StatusAtendimento statusAtendimento, Cliente cliente, Veiculo veiculo, LocalDate dataCriacao,  List<ServicoAtendimento> servicoAtendimentos) {
         this.atendimentoId = atendimentoId;
         this.statusAtendimento = statusAtendimento;
         this.cliente = cliente;
         this.veiculo = veiculo;
         this.dataCriacao = dataCriacao;
+        this.servicoAtendimentos = servicoAtendimentos;
     }
 
     public Long getAtendimentoId() {
@@ -78,5 +83,13 @@ public class Atendimento {
 
     public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
+    }
+
+    public List<ServicoAtendimento> getServicoAtendimentos() {
+        return servicoAtendimentos;
+    }
+
+    public void setServicoAtendimentos(List<ServicoAtendimento> servicoAtendimentos) {
+        this.servicoAtendimentos = servicoAtendimentos;
     }
 }

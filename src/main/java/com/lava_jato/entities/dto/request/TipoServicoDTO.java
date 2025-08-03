@@ -1,8 +1,10 @@
 package com.lava_jato.entities.dto.request;
 
+import java.math.BigDecimal;
+
 public class TipoServicoDTO {
     private String nomeServico;
-    private Double precoServico;
+    private BigDecimal precoServico;
     private String observacao;
 
     public String getNomeServico() {
@@ -13,11 +15,11 @@ public class TipoServicoDTO {
         this.nomeServico = nomeServico;
     }
 
-    public Double getPrecoServico() {
+    public BigDecimal getPrecoServico() {
         return precoServico;
     }
 
-    public void setPrecoServico(Double precoServico) {
+    public void setPrecoServico(BigDecimal precoServico) {
         this.precoServico = precoServico;
     }
 

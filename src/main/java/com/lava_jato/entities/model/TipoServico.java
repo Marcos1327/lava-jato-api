@@ -2,6 +2,7 @@ package com.lava_jato.entities.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -12,13 +13,14 @@ public class TipoServico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tipoServicoId;
     private String nomeServico;
-    private Double precoServico;
+    @Column(precision = 10, scale = 2)
+    private BigDecimal precoServico;
     private String observacao;
     private LocalDate dataCriacao;
 
     public TipoServico() {}
 
-    public TipoServico(String nomeServico, Double precoServico, String observacao, LocalDate dataCriacao ) {
+    public TipoServico(String nomeServico, BigDecimal precoServico, String observacao, LocalDate dataCriacao ) {
          this.nomeServico = nomeServico;
          this.precoServico = precoServico;
          this.observacao = observacao;
@@ -41,11 +43,11 @@ public class TipoServico {
         this.nomeServico = nomeServico;
     }
 
-    public Double getPrecoServico() {
+    public BigDecimal getPrecoServico() {
         return precoServico;
     }
 
-    public void setPrecoServico(Double precoServico) {
+    public void setPrecoServico(BigDecimal precoServico) {
         this.precoServico = precoServico;
     }
 

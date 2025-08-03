@@ -1,11 +1,12 @@
 package com.lava_jato.entities.dto.responses;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class TipoServicoResponseDTO {
     private Long tipoServicoId;
     private String nomeServico;
-    private Double precoServico;
+    private BigDecimal precoServico;
     private String observacao;
     private LocalDate dataCriacao;
 
@@ -25,11 +26,11 @@ public class TipoServicoResponseDTO {
         this.nomeServico = nomeServico;
     }
 
-    public Double getPrecoServico() {
+    public BigDecimal getPrecoServico() {
         return precoServico;
     }
 
-    public void setPrecoServico(Double precoServico) {
+    public void setPrecoServico(BigDecimal precoServico) {
         this.precoServico = precoServico;
     }
 

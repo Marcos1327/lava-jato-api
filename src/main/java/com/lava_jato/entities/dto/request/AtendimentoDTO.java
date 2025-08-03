@@ -1,9 +1,12 @@
 package com.lava_jato.entities.dto.request;
 
+import java.util.List;
+
 public class AtendimentoDTO {
 
     private Long clienteId;
     private Long veiculoId;
+    private List<ServicoAtendimentoDTO> servicos;
 
     public Long getClienteId() {
         return clienteId;
@@ -19,5 +22,13 @@ public class AtendimentoDTO {
 
     public void setVeiculoId(Long veiculoId) {
         this.veiculoId = veiculoId;
+    }
+
+    public List<ServicoAtendimentoDTO> getServicos() {
+        return servicos;
+    }
+
+    public void setServicos(List<ServicoAtendimentoDTO> servicos) {
+        this.servicos = servicos;
     }
 }

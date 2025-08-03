@@ -24,7 +24,7 @@ public class TipoServicoController {
     }
 
     @PatchMapping("update/{tipoServicoId}")
-    public ResponseEntity<TipoServicoResponseDTO> update(@PathVariable Integer tipoServicoId, @RequestBody TipoServicoDTO tipoServicoDTO){
+    public ResponseEntity<TipoServicoResponseDTO> update(@PathVariable Long tipoServicoId, @RequestBody TipoServicoDTO tipoServicoDTO){
         return ResponseEntity.ok(tipoServicoService.update(tipoServicoId,  tipoServicoDTO));
     }
 
@@ -34,12 +34,12 @@ public class TipoServicoController {
     }
 
     @GetMapping("/find-by-id/{tipoServicoId}")
-    public ResponseEntity<TipoServicoResponseDTO> findById(@PathVariable Integer tipoServicoId){
+    public ResponseEntity<TipoServicoResponseDTO> findById(@PathVariable Long tipoServicoId){
         return ResponseEntity.ok(tipoServicoService.getById(tipoServicoId));
     }
 
     @DeleteMapping("delete/{tipoServicoId}")
-    public ResponseEntity<TipoServicoResponseDTO> delete(@PathVariable Integer tipoServicoId){
+    public ResponseEntity<TipoServicoResponseDTO> delete(@PathVariable Long tipoServicoId){
         tipoServicoService.deleteById(tipoServicoId);
         return ResponseEntity.noContent().build();
     }

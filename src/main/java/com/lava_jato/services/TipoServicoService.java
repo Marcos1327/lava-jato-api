@@ -48,7 +48,7 @@ public class TipoServicoService {
     }
 
     @Transactional
-    public TipoServicoResponseDTO update (Integer tipoServicoId, TipoServicoDTO tipoServicoDTO) {
+    public TipoServicoResponseDTO update (Long tipoServicoId, TipoServicoDTO tipoServicoDTO) {
         TipoServico tipoServico = findById(tipoServicoId);
 
         if(tipoServicoDTO.getNomeServico() != null && !tipoServicoDTO.getNomeServico().isEmpty()){
@@ -72,13 +72,17 @@ public class TipoServicoService {
         return servicos.stream().map(tipoServicoMapper::toResponseDTO).collect(Collectors.toList());
     }
 
-    public TipoServicoResponseDTO getById(Integer tipoServicoId){
+    public TipoServicoResponseDTO getById(Long tipoServicoId){
         TipoServico servico = findById(tipoServicoId);
         return tipoServicoMapper.toResponseDTO(servico);
     }
 
+    public TipoServico getTipoServicoByIdEntity(Long tipoServicoId){
+        return findById(tipoServicoId);
+    }
+
     @Transactional
-    public void deleteById(Integer tipoServicoId){
+    public void deleteById(Long tipoServicoId){
         TipoServico servico = findById(tipoServicoId);
         tipoServicoRepository.delete(servico);
     }
@@ -88,7 +92,7 @@ public class TipoServicoService {
             throw new BusinessException("Já existe um serviço com este nome.");
         }
     }
-    private TipoServico findById( Integer tipoServicoId) {
+    private TipoServico findById(Long tipoServicoId) {
         return tipoServicoRepository.findById(tipoServicoId).orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrato pelo Id: " + tipoServicoId));
     }
 
