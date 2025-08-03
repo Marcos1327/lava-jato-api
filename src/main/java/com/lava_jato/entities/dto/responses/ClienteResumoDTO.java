@@ -1,4 +1,4 @@
-package com.lava_jato.entities.dto;
+package com.lava_jato.entities.dto.responses;
 
 public class ClienteResumoDTO {
     private Long clienteId;

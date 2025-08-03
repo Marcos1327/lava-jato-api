@@ -1,6 +1,6 @@
 package com.lava_jato.services;
 
-import com.lava_jato.entities.dto.PessoaJuridicaDTO;
+import com.lava_jato.entities.dto.request.PessoaJuridicaDTO;
 import com.lava_jato.entities.dto.responses.PessoaJuridicaResponseDTO;
 import com.lava_jato.entities.mapstructs.PessoaJuridicaMapper;
 import com.lava_jato.entities.model.PessoaJuridica;

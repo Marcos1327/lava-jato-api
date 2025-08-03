@@ -1,6 +1,6 @@
 package com.lava_jato.controllers;
 
-import com.lava_jato.entities.dto.FuncionarioDTO;
+import com.lava_jato.entities.dto.request.FuncionarioDTO;
 import com.lava_jato.entities.dto.responses.FuncionarioResponseDTO;
 import com.lava_jato.services.FuncionarioService;
 import org.springframework.http.ResponseEntity;

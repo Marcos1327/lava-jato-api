@@ -1,8 +1,6 @@
 package com.lava_jato.entities.dto.responses;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.lava_jato.entities.dto.ClienteResumoDTO;
 
 import java.time.LocalDate;
 

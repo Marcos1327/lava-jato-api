@@ -1,6 +1,4 @@
-package com.lava_jato.entities.dto;
-
-import java.time.LocalDate;
+package com.lava_jato.entities.dto.request;
 
 public class PessoaJuridicaDTO {
 

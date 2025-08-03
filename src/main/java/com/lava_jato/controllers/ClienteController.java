@@ -1,18 +1,13 @@
 package com.lava_jato.controllers;
 
-import com.lava_jato.entities.dto.ClienteResumoDTO;
-import com.lava_jato.entities.dto.PessoaFisicaDTO;
-import com.lava_jato.entities.dto.PessoaJuridicaDTO;
+import com.lava_jato.entities.dto.responses.ClienteResumoDTO;
+import com.lava_jato.entities.dto.request.PessoaFisicaDTO;
+import com.lava_jato.entities.dto.request.PessoaJuridicaDTO;
 import com.lava_jato.entities.dto.responses.PessoaFisicaResponseDTO;
 import com.lava_jato.entities.dto.responses.PessoaJuridicaResponseDTO;
-import com.lava_jato.entities.model.Cliente;
-import com.lava_jato.entities.model.PessoaFisica;
-import com.lava_jato.entities.model.PessoaJuridica;
-import com.lava_jato.repositories.ClienteRepository;
 import com.lava_jato.services.ClienteService;
 import com.lava_jato.services.PessoaFisicaService;
 import com.lava_jato.services.PessoaJuridicaService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

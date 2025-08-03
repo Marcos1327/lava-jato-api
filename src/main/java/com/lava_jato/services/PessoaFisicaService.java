@@ -1,6 +1,6 @@
 package com.lava_jato.services;
 
-import com.lava_jato.entities.dto.PessoaFisicaDTO;
+import com.lava_jato.entities.dto.request.PessoaFisicaDTO;
 import com.lava_jato.entities.dto.responses.PessoaFisicaResponseDTO;
 import com.lava_jato.entities.mapstructs.PessoaFisicaMapper;
 import com.lava_jato.entities.model.PessoaFisica;

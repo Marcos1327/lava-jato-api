@@ -1,6 +1,6 @@
 package com.lava_jato.services;
 
-import com.lava_jato.entities.dto.FuncionarioDTO;
+import com.lava_jato.entities.dto.request.FuncionarioDTO;
 import com.lava_jato.entities.dto.responses.FuncionarioResponseDTO;
 import com.lava_jato.entities.mapstructs.FuncionarioMapper;
 import com.lava_jato.entities.model.Funcionario;

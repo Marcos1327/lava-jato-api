@@ -1,7 +1,6 @@
 package com.lava_jato.services;
 
-import com.lava_jato.entities.dto.TipoServicoDTO;
-import com.lava_jato.entities.dto.VeiculoDTO;
+import com.lava_jato.entities.dto.request.TipoServicoDTO;
 import com.lava_jato.entities.dto.responses.TipoServicoResponseDTO;
 import com.lava_jato.entities.mapstructs.TipoServicoMapper;
 import com.lava_jato.entities.model.TipoServico;

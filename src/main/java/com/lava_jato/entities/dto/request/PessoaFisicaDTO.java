@@ -1,6 +1,4 @@
-package com.lava_jato.entities.dto;
-
-import jakarta.validation.constraints.Email;
+package com.lava_jato.entities.dto.request;
 
 public class PessoaFisicaDTO {
 

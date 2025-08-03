@@ -1,6 +1,6 @@
 package com.lava_jato.services;
 
-import com.lava_jato.entities.dto.ClienteResumoDTO;
+import com.lava_jato.entities.dto.responses.ClienteResumoDTO;
 import com.lava_jato.entities.mapstructs.ClienteMapper;
 import com.lava_jato.entities.model.Cliente;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;

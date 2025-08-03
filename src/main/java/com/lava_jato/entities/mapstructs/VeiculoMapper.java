@@ -1,9 +1,7 @@
 package com.lava_jato.entities.mapstructs;
 
-import com.lava_jato.entities.dto.ClienteResumoDTO;
-import com.lava_jato.entities.dto.VeiculoDTO;
+import com.lava_jato.entities.dto.request.VeiculoDTO;
 import com.lava_jato.entities.dto.responses.VeiculoResponseDTO;
-import com.lava_jato.entities.model.Cliente;
 import com.lava_jato.entities.model.Veiculo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

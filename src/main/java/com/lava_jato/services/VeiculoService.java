@@ -1,6 +1,6 @@
 package com.lava_jato.services;
 
-import com.lava_jato.entities.dto.VeiculoDTO;
+import com.lava_jato.entities.dto.request.VeiculoDTO;
 import com.lava_jato.entities.dto.responses.VeiculoResponseDTO;
 import com.lava_jato.entities.mapstructs.VeiculoMapper;
 import com.lava_jato.entities.model.Veiculo;
@@ -96,6 +96,10 @@ public class VeiculoService {
             throw new BusinessException("Já existe um veiculo com este Placa.");
         }
     }
+    public Veiculo findByIdEntity(Long veiculoId){
+        return findById(veiculoId);
+    }
+
     private Veiculo findById(Long veiculoId){
         return veiculoRepository.findById(veiculoId).orElseThrow(() -> new ResourceNotFoundException("Veiculo não encontrato pelo id: " + veiculoId));
     }

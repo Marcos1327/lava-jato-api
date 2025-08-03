@@ -1,7 +1,6 @@
 package com.lava_jato.services;
 
-import com.lava_jato.entities.dto.ProdutoDTO;
-import com.lava_jato.entities.dto.VeiculoDTO;
+import com.lava_jato.entities.dto.request.ProdutoDTO;
 import com.lava_jato.entities.dto.responses.ProdutoResponseDTO;
 import com.lava_jato.entities.mapstructs.ProdutoMapper;
 import com.lava_jato.entities.model.Produto;

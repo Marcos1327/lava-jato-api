@@ -1,4 +1,4 @@
-package com.lava_jato.entities.dto;
+package com.lava_jato.entities.dto.request;
 
 public class ProdutoDTO {
     private String nomeProduto;

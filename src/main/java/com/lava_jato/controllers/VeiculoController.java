@@ -1,11 +1,8 @@
 package com.lava_jato.controllers;
 
-import com.lava_jato.entities.dto.VeiculoDTO;
+import com.lava_jato.entities.dto.request.VeiculoDTO;
 import com.lava_jato.entities.dto.responses.VeiculoResponseDTO;
-import com.lava_jato.entities.model.PessoaFisica;
-import com.lava_jato.entities.model.Veiculo;
 import com.lava_jato.services.VeiculoService;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
