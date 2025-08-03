@@ -7,6 +7,7 @@ import com.lava_jato.entities.mapstructs.AtendimentoMapper;
 import com.lava_jato.entities.model.Atendimento;
 import com.lava_jato.entities.model.Cliente;
 import com.lava_jato.entities.model.Veiculo;
+import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
 import com.lava_jato.repositories.AtendimentoRepository;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class AtendimentoService {
 
     public AtendimentoResponseDTO create(AtendimentoDTO atendimentoDTO) {
         Cliente cliente = clienteService.getClienteByIdEntity(atendimentoDTO.getClienteId());
-        Veiculo veiculo = veiculoService.findByIdEntity(atendimentoDTO.getVeiculoId());
+        Veiculo veiculo = veiculoService.getVeiculoByIdEntity(atendimentoDTO.getVeiculoId());
 
         Atendimento atendimento = new Atendimento();
         atendimento.setCliente(cliente);
@@ -41,5 +42,19 @@ public class AtendimentoService {
         AtendimentoResponseDTO atendimentoResponseDTO = atendimentoMapper.toResponseDTO(atendimento);
 
         return  atendimentoResponseDTO;
+    }
+
+    public AtendimentoResponseDTO getById(Long atendimentoId) {
+        Atendimento atendimento = findById(atendimentoId);
+        return atendimentoMapper.toResponseDTO(atendimento);
+    }
+
+    public void deleteById(Long atendimentoId) {
+        Atendimento atendimento = findById(atendimentoId);
+        atendimentoRepository.delete(atendimento);
+    }
+
+    private Atendimento findById(Long atendimentoId){
+        return atendimentoRepository.findById(atendimentoId).orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado pelo id: " + atendimentoId));
     }
 }

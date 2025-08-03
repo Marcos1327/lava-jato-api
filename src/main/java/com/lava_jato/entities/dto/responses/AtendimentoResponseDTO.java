@@ -1,13 +1,16 @@
 package com.lava_jato.entities.dto.responses;
 
+import com.lava_jato.entities.enums.StatusAtendimento;
+
 import java.time.LocalDate;
 
 public class AtendimentoResponseDTO {
     private Long atendimentoId;
+    private StatusAtendimento statusAtendimento;
     private LocalDate dataCriacao;
-
     private ClienteResumoDTO cliente;
     private VeiculoResumoDTO veiculo;
+
 
     public Long getAtendimentoId() {
         return atendimentoId;
@@ -15,6 +18,14 @@ public class AtendimentoResponseDTO {
 
     public void setAtendimentoId(Long atendimentoId) {
         this.atendimentoId = atendimentoId;
+    }
+
+    public StatusAtendimento getStatusAtendimento() {
+        return statusAtendimento;
+    }
+
+    public void setStatusAtendimento(StatusAtendimento statusAtendimento) {
+        this.statusAtendimento = statusAtendimento;
     }
 
     public LocalDate getDataCriacao() {

@@ -96,7 +96,7 @@ public class VeiculoService {
             throw new BusinessException("Já existe um veiculo com este Placa.");
         }
     }
-    public Veiculo findByIdEntity(Long veiculoId){
+    public Veiculo getVeiculoByIdEntity(Long veiculoId){
         return findById(veiculoId);
     }
 

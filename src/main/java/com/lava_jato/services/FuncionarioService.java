@@ -88,7 +88,7 @@ public class FuncionarioService {
 
     @Transactional
     public void deleteById(Long funcionarioId){
-        Funcionario funcionario  = findById(funcionarioId);
+        Funcionario funcionario = findById(funcionarioId);
         funcionarioRepository.delete(funcionario);
     }
 
