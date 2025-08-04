@@ -1,36 +1,15 @@
-package com.lava_jato.entities.model.caixa;
+package com.lava_jato.entities.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lava_jato.entities.enums.StatusPagamento;
-import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "tb_depesa")
-public class Despesa {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long despesaId;
-
+public class DespesaDTO {
     private String descricao;
-    @Column(precision = 10, scale = 2)
     private BigDecimal valorDespesa;
-
-    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataDespesa;
-
-    @Enumerated(EnumType.STRING)
     private StatusPagamento statusPagamento;
-
-    public Long getDespesaId() {
-        return despesaId;
-    }
-
-    public void setDespesaId(Long despesaId) {
-        this.despesaId = despesaId;
-    }
 
     public String getDescricao() {
         return descricao;
