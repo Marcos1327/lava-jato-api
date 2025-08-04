@@ -1,5 +1,6 @@
 package com.lava_jato.entities.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lava_jato.entities.enums.StatusPagamento;
 
 import java.math.BigDecimal;
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 public class DespesaDTO {
     private String descricao;
     private BigDecimal valorDespesa;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataDespesa;
     private StatusPagamento statusPagamento;
 
