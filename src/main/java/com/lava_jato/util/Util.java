@@ -21,4 +21,10 @@ public class Util {
     public static boolean isNullOrEmpty(Boolean temporario) {
         return temporario == null;
     }
+
+    public static boolean isNullOrEmpty(Object value) {
+        if (value == null) return true;
+        if (value instanceof String) return ((String) value).trim().isEmpty();
+        return false;
+    }
 }

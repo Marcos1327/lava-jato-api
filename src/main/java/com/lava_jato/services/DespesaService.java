@@ -57,16 +57,15 @@ public class DespesaService {
         if (Util.isNullOrEmpty(despesaDTO.getDescricao())) {
             camposObrigatorios.add("Descrição");
         }
-        if (Util.isNullOrEmpty(despesaDTO.getValorDespesa().toString())) {
+        if (Util.isNullOrEmpty(despesaDTO.getValorDespesa())) {
             camposObrigatorios.add("Valor Despesa");
         }
-        if (Util.isNullOrEmpty(despesaDTO.getDataDespesa().toString())) {
+        if (Util.isNullOrEmpty(despesaDTO.getDataDespesa())) {
             camposObrigatorios.add("Data Despesa");
         }
-        if (Util.isNullOrEmpty(despesaDTO.getStatusPagamento().toString())) {
+        if (Util.isNullOrEmpty(despesaDTO.getStatusPagamento())) {
             camposObrigatorios.add("Status Pagamento");
         }
-
         if (!camposObrigatorios.isEmpty()) {
             throw new ValidationException("Os seguintes campos são obrigatórios: " + String.join(", ", camposObrigatorios));
         }
