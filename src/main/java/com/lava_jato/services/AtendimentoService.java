@@ -12,6 +12,7 @@ import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
 import com.lava_jato.repositories.AtendimentoRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,10 @@ public class AtendimentoService {
 
         List<ProdutoAtendimento> produtosAtendimento = criarProdutoAtendimento(atendimentoDTO, atendimento);
         atendimento.setProdutos(produtosAtendimento);
+
+        BigDecimal precoTotal = calcularTotalServicos(atendimentoDTO).add(calcularTotalProdutos(atendimentoDTO));
+        atendimento.setPrecoTotal(precoTotal);
+        atendimento.setStatusPagamento(atendimentoDTO.getPagamento().getStatusPagamento());
 
         atendimentoRepository.save(atendimento);
         AtendimentoResponseDTO atendimentoResponseDTO = atendimentoMapper.toResponseDTO(atendimento);
@@ -112,5 +117,26 @@ public class AtendimentoService {
         }
 
         return produtos;
+    }
+
+    private BigDecimal calcularTotalServicos(AtendimentoDTO atendimentoDTO){
+        BigDecimal total = BigDecimal.ZERO;
+
+        for(ServicoAtendimentoDTO servicoAtendimentoDTO : atendimentoDTO.getServicos()){
+            TipoServico servico = tipoServicoService.getTipoServicoByIdEntity(servicoAtendimentoDTO.getServicoAtendimentoId());
+            total = total.add(servico.getPrecoServico());
+        }
+        return total;
+    }
+
+    private BigDecimal calcularTotalProdutos(AtendimentoDTO atendimentoDTO){
+        BigDecimal total = BigDecimal.ZERO;
+
+        for(ProdutoAtendimentoDTO produtoAtendimentoDTO : atendimentoDTO.getProdutos()){
+            Produto produto = produtoService.getProdutoByIdEntity(produtoAtendimentoDTO.getProdutoAtendimentoId());
+            BigDecimal subtotal = produto.getPrecoProduto().multiply(BigDecimal.valueOf(produtoAtendimentoDTO.getProdutoAtendimentoId()));
+            total = total.add(subtotal);
+        }
+        return total;
     }
 }
