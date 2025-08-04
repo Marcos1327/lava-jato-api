@@ -2,7 +2,7 @@ package com.lava_jato.entities.model.caixa;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lava_jato.entities.enums.StatusPagamento;
-import com.lava_jato.entities.enums.TipoDespesa;
+import com.lava_jato.entities.enums.TipoLancamento;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -29,8 +29,7 @@ public class Despesa {
     private StatusPagamento statusPagamento;
 
     @Enumerated(EnumType.STRING)
-    private TipoDespesa tipoDespesa = TipoDespesa.SAIDA;
-
+    private TipoLancamento tipoLancamento = TipoLancamento.SAIDA;
 
     public Long getDespesaId() {
         return despesaId;
@@ -80,11 +79,11 @@ public class Despesa {
         this.dataCriacao = dataCriacao;
     }
 
-    public TipoDespesa getTipoDespesa() {
-        return tipoDespesa;
+    public TipoLancamento getTipoLancamento() {
+        return tipoLancamento;
     }
 
-    public void setTipoDespesa(TipoDespesa tipoDespesa) {
-        this.tipoDespesa = tipoDespesa;
+    public void setTipoLancamento(TipoLancamento tipoLancamento) {
+        this.tipoLancamento = tipoLancamento;
     }
 }

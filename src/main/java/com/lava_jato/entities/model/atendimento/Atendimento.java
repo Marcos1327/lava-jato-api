@@ -3,6 +3,7 @@ package com.lava_jato.entities.model.atendimento;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lava_jato.entities.enums.StatusAtendimento;
 import com.lava_jato.entities.enums.StatusPagamento;
+import com.lava_jato.entities.enums.TipoLancamento;
 import com.lava_jato.entities.model.Cliente;
 import com.lava_jato.entities.model.Veiculo;
 import jakarta.persistence.*;
@@ -47,12 +48,14 @@ public class Atendimento {
 
     private Boolean arquivado = false;
 
+    private TipoLancamento tipoLancamento = TipoLancamento.ENTRADA;
+
 
     public Atendimento() {
     }
 
     public Atendimento(Long atendimentoId, StatusAtendimento statusAtendimento, StatusPagamento statusPagamento, Cliente cliente, Veiculo veiculo, LocalDate dataCriacao,
-                       List<ServicoAtendimento> servicos, List<ProdutoAtendimento> produtos, BigDecimal precoTotal, Boolean arquivado) {
+                       List<ServicoAtendimento> servicos, List<ProdutoAtendimento> produtos, BigDecimal precoTotal, Boolean arquivado, TipoLancamento tipoLancamento) {
         this.atendimentoId = atendimentoId;
         this.statusAtendimento = statusAtendimento;
         this.statusPagamento = statusPagamento;
@@ -63,6 +66,7 @@ public class Atendimento {
         this.produtos = produtos;
         this.precoTotal = precoTotal;
         this.arquivado = arquivado;
+        this.tipoLancamento = tipoLancamento;
     }
 
     public Long getAtendimentoId() {
@@ -143,5 +147,13 @@ public class Atendimento {
 
     public void setArquivado(Boolean arquivado) {
         this.arquivado = arquivado;
+    }
+
+    public TipoLancamento getTipoLancamento() {
+        return tipoLancamento;
+    }
+
+    public void setTipoLancamento(TipoLancamento tipoLancamento) {
+        this.tipoLancamento = tipoLancamento;
     }
 }

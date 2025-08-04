@@ -1,6 +1,6 @@
 package com.lava_jato.entities.enums;
 
-public enum TipoDespesa {
+public enum TipoLancamento {
     ENTRADA,
     SAIDA
 }

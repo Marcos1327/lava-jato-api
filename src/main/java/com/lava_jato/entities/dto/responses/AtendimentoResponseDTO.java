@@ -4,6 +4,7 @@ import com.lava_jato.entities.dto.request.PagamentoDTO;
 import com.lava_jato.entities.dto.request.ProdutoAtendimentoDTO;
 import com.lava_jato.entities.dto.request.ServicoAtendimentoDTO;
 import com.lava_jato.entities.enums.StatusAtendimento;
+import com.lava_jato.entities.enums.TipoLancamento;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -11,13 +12,14 @@ import java.util.List;
 public class AtendimentoResponseDTO {
     private Long atendimentoId;
     private StatusAtendimento statusAtendimento;
+    private TipoLancamento tipoLancamento;
+    private Boolean arquivado;
+    private PagamentoResponseDTO pagamento;
     private LocalDate dataCriacao;
     private ClienteResumoDTO cliente;
     private VeiculoResumoDTO veiculo;
     private List<ServicoAtendimentoDTO> servicos;
     private List<ProdutoAtendimentoDTO> produtos;
-    private PagamentoResponseDTO pagamento;
-    private Boolean arquivado;
 
     public Long getAtendimentoId() {
         return atendimentoId;
@@ -89,5 +91,13 @@ public class AtendimentoResponseDTO {
 
     public void setArquivado(Boolean arquivado) {
         this.arquivado = arquivado;
+    }
+
+    public TipoLancamento getTipoLancamento() {
+        return tipoLancamento;
+    }
+
+    public void setTipoLancamento(TipoLancamento tipoLancamento) {
+        this.tipoLancamento = tipoLancamento;
     }
 }

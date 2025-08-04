@@ -2,7 +2,7 @@ package com.lava_jato.entities.dto.responses;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lava_jato.entities.enums.StatusPagamento;
-import com.lava_jato.entities.enums.TipoDespesa;
+import com.lava_jato.entities.enums.TipoLancamento;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,7 +14,7 @@ public class DespesaResponseDTO {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataDespesa;
     private StatusPagamento statusPagamento;
-    private TipoDespesa tipoDespesa;
+    private TipoLancamento tipoLancamento;
 
     public Long getDespesaId() {
         return despesaId;
@@ -56,11 +56,11 @@ public class DespesaResponseDTO {
         this.statusPagamento = statusPagamento;
     }
 
-    public TipoDespesa getTipoDespesa() {
-        return tipoDespesa;
+    public TipoLancamento getTipoLancamento() {
+        return tipoLancamento;
     }
 
-    public void setTipoDespesa(TipoDespesa tipoDespesa) {
-        this.tipoDespesa = tipoDespesa;
+    public void setTipoLancamento(TipoLancamento tipoLancamento) {
+        this.tipoLancamento = tipoLancamento;
     }
 }
