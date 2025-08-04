@@ -5,6 +5,7 @@ import com.lava_jato.entities.dto.request.ProdutoAtendimentoDTO;
 import com.lava_jato.entities.dto.request.ServicoAtendimentoDTO;
 import com.lava_jato.entities.dto.responses.AtendimentoResponseDTO;
 import com.lava_jato.entities.enums.StatusAtendimento;
+import com.lava_jato.entities.enums.StatusPagamento;
 import com.lava_jato.entities.mapstructs.AtendimentoMapper;
 import com.lava_jato.entities.model.*;
 import com.lava_jato.exceptions.handlers.BusinessException;
@@ -102,6 +103,55 @@ public class AtendimentoService {
 
         atendimentoRepository.save(atendimento);
         return atendimentoMapper.toResponseDTO(atendimento);
+    }
+
+    public AtendimentoResponseDTO arquivarAtendimento(Long atendimentoId){
+        Atendimento atendimento = findById(atendimentoId);
+
+        if(!atendimento.getStatusAtendimento().equals(StatusAtendimento.FINALIZADO) && atendimento.getStatusPagamento().equals(StatusPagamento.PAGO)) {
+            throw new BusinessException("Só é possivel arquivar atendimentos finalizados e pagos .");
+        }
+        atendimento.setArquivado(true);
+        atendimentoRepository.save(atendimento);
+
+        return atendimentoMapper.toResponseDTO(atendimento);
+    }
+
+    public void arquivarTodosAtendimentosFinalizados(){
+        List<Atendimento> atendimentosFinalizados = atendimentoRepository.findAllByStatusAtendimentoAndArquivadoFalseAndStatusPagamento(StatusAtendimento.FINALIZADO, StatusPagamento.PAGO);
+
+        if(atendimentosFinalizados.isEmpty()){
+            throw new BusinessException("Não há atendimentos a ser arquivados.");
+        }
+
+        for(Atendimento atendimento : atendimentosFinalizados){
+            atendimento.setArquivado(true);
+        }
+        atendimentoRepository.saveAll(atendimentosFinalizados);
+    }
+
+    public void desarquivarAtendimento(Long atendimentoId){
+        Atendimento atendimento = findById(atendimentoId);
+
+        if(atendimento.getArquivado().equals(Boolean.TRUE)){
+            atendimento.setArquivado(false);
+        }
+        atendimentoRepository.save(atendimento);
+        atendimentoMapper.toResponseDTO(atendimento);
+    }
+
+    public void desarquivarTodosAtendimentos(){
+        List<Atendimento> arquivados = atendimentoRepository.findAllByArquivadoTrue();
+
+        for(Atendimento atendimento : arquivados){
+            atendimento.setArquivado(false);
+        }
+        atendimentoRepository.saveAll(arquivados);
+    }
+
+    public List<AtendimentoResponseDTO> findAllAtendimentosArquivados(){
+        List<Atendimento> atendimentosArquivados = atendimentoRepository.findAllByArquivadoTrue();
+        return atendimentosArquivados.stream().map(atendimentoMapper::toResponseDTO).collect(Collectors.toList());
     }
 
     public List<AtendimentoResponseDTO> findAll() {

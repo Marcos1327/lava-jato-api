@@ -17,6 +17,7 @@ public class AtendimentoResponseDTO {
     private List<ServicoAtendimentoDTO> servicos;
     private List<ProdutoAtendimentoDTO> produtos;
     private PagamentoResponseDTO pagamento;
+    private Boolean arquivado;
 
     public Long getAtendimentoId() {
         return atendimentoId;
@@ -80,5 +81,13 @@ public class AtendimentoResponseDTO {
 
     public void setPagamento(PagamentoResponseDTO pagamento) {
         this.pagamento = pagamento;
+    }
+
+    public Boolean getArquivado() {
+        return arquivado;
+    }
+
+    public void setArquivado(Boolean arquivado) {
+        this.arquivado = arquivado;
     }
 }

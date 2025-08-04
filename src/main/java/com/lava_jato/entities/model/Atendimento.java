@@ -43,12 +43,14 @@ public class Atendimento {
     @Column(precision = 10, scale = 2)
     private BigDecimal precoTotal;
 
+    private Boolean arquivado = false;
+
 
     public Atendimento() {
     }
 
     public Atendimento(Long atendimentoId, StatusAtendimento statusAtendimento, StatusPagamento statusPagamento, Cliente cliente, Veiculo veiculo, LocalDate dataCriacao,
-                       List<ServicoAtendimento> servicos, List<ProdutoAtendimento> produtos, BigDecimal precoTotal) {
+                       List<ServicoAtendimento> servicos, List<ProdutoAtendimento> produtos, BigDecimal precoTotal, Boolean arquivado) {
         this.atendimentoId = atendimentoId;
         this.statusAtendimento = statusAtendimento;
         this.statusPagamento = statusPagamento;
@@ -58,6 +60,7 @@ public class Atendimento {
         this.servicos = servicos;
         this.produtos = produtos;
         this.precoTotal = precoTotal;
+        this.arquivado = arquivado;
     }
 
     public Long getAtendimentoId() {
@@ -130,5 +133,13 @@ public class Atendimento {
 
     public void setPrecoTotal(BigDecimal precoTotal) {
         this.precoTotal = precoTotal;
+    }
+
+    public Boolean getArquivado() {
+        return arquivado;
+    }
+
+    public void setArquivado(Boolean arquivado) {
+        this.arquivado = arquivado;
     }
 }

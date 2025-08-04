@@ -28,6 +28,34 @@ public class AtendimentoController {
         return ResponseEntity.ok(atendimentoService.update(atendimentoId, atendimentoDTO));
     }
 
+    @PatchMapping("/arquivar/{atendimentoId}")
+    public ResponseEntity<AtendimentoResponseDTO> arquivar(@PathVariable Long atendimentoId){
+        return ResponseEntity.ok(atendimentoService.arquivarAtendimento(atendimentoId));
+    }
+
+    @PatchMapping("/arquivar-todos")
+    public ResponseEntity<Void> arquivarTodosFinalizados(){
+        atendimentoService.arquivarTodosAtendimentosFinalizados();
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/arquivados")
+    public ResponseEntity<List<AtendimentoResponseDTO>> arquivados(){
+        return ResponseEntity.ok(atendimentoService.findAllAtendimentosArquivados());
+    }
+
+    @PatchMapping("/desarquivar/{atendimentoId}")
+    public ResponseEntity<Void> desarquivar(@PathVariable Long atendimentoId){
+        atendimentoService.desarquivarAtendimento(atendimentoId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/desarquivar-todos")
+    public ResponseEntity<Void> desarquivarTodosFinalizados(){
+        atendimentoService.desarquivarTodosAtendimentos();
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/")
     public ResponseEntity<List<AtendimentoResponseDTO>> findAll() {
         return ResponseEntity.ok(atendimentoService.findAll());
@@ -41,6 +69,6 @@ public class AtendimentoController {
     @DeleteMapping("/delete/{atendimentoId}")
     public ResponseEntity<AtendimentoResponseDTO> delete(@PathVariable Long atendimentoId){
         atendimentoService.deleteById(atendimentoId);
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.noContent().build();
     }
 }
