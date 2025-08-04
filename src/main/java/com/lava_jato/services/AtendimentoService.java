@@ -61,7 +61,7 @@ public class AtendimentoService {
         List<ProdutoAtendimento> produtosAtendimento = criarProdutoAtendimento(atendimentoDTO, atendimento);
         atendimento.setProdutos(produtosAtendimento);
 
-        BigDecimal precoTotal = calcularTotalServicos(atendimentoDTO).add(calcularTotalProdutos(atendimentoDTO));
+        BigDecimal precoTotal = calcularPrecoTotal(atendimentoDTO);
         atendimento.setPrecoTotal(precoTotal);
         atendimento.setStatusPagamento(atendimentoDTO.getPagamento().getStatusPagamento());
 
@@ -70,6 +70,8 @@ public class AtendimentoService {
 
         return  atendimentoResponseDTO;
     }
+
+
 
     @Transactional
     public AtendimentoResponseDTO update(Long atendimentoId, AtendimentoDTO atendimentoDTO){
@@ -100,7 +102,7 @@ public class AtendimentoService {
             atendimento.setProdutos(produtosAtualizados);
         }
         if(atendimentoDTO.getProdutos() != null &&  !atendimentoDTO.getProdutos().isEmpty() || (atendimentoDTO.getServicos() != null && !atendimentoDTO.getServicos().isEmpty())) {
-           BigDecimal precoTotalAtualizado = calcularTotalServicos(atendimentoDTO).add(calcularTotalProdutos(atendimentoDTO));
+           BigDecimal precoTotalAtualizado = calcularPrecoTotal(atendimentoDTO);
            atendimento.setPrecoTotal(precoTotalAtualizado);
         }
 
@@ -214,6 +216,10 @@ public class AtendimentoService {
         }
 
         return produtos;
+    }
+
+    private BigDecimal calcularPrecoTotal(AtendimentoDTO atendimentoDTO) {
+        return calcularTotalServicos(atendimentoDTO).add(calcularTotalProdutos(atendimentoDTO));
     }
 
     private BigDecimal calcularTotalServicos(AtendimentoDTO atendimentoDTO){
