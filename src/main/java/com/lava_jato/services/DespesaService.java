@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DespesaService {
@@ -42,9 +43,39 @@ public class DespesaService {
         return responseDTO;
     }
 
+    public DespesaResponseDTO update(Long despesaId, DespesaDTO despesaDTO) {
+        Despesa despesa = findById(despesaId);
+
+        if(despesaDTO.getDescricao() != null && !despesaDTO.getDescricao().isEmpty()){
+            despesa.setDescricao(despesaDTO.getDescricao());
+        }
+        if(despesaDTO.getValorDespesa() != null){
+            despesa.setValorDespesa(despesaDTO.getValorDespesa());
+        }
+        if(despesaDTO.getDataDespesa() != null){
+            despesa.setDataDespesa(despesaDTO.getDataDespesa());
+        }
+        if(despesaDTO.getStatusPagamento() != null){
+            despesa.setStatusPagamento(despesaDTO.getStatusPagamento());
+        }
+        despesaRepository.save(despesa);
+
+        return despesaMapper.toResponseDTO(despesa);
+    }
+
+    public List<DespesaResponseDTO> findAll() {
+        List<Despesa> despesas = despesaRepository.findAll();
+        return despesas.stream().map(despesaMapper::toResponseDTO).collect(Collectors.toList());
+    }
+
     public DespesaResponseDTO getById(Long despesaId) {
         Despesa despesa = findById(despesaId);
         return despesaMapper.toResponseDTO(despesa);
+    }
+
+    public void deleteById(Long despesaId) {
+        Despesa despesa = findById(despesaId);
+        despesaRepository.delete(despesa);
     }
 
     private Despesa findById(Long despesaId){
