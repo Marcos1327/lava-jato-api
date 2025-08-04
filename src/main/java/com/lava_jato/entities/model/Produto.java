@@ -19,7 +19,7 @@ public class Produto {
     private BigDecimal precoProduto;
     private String observacao;
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataCadastro;
+    private LocalDate dataCriacao;
 
     public Produto() {}
 
@@ -69,12 +69,12 @@ public class Produto {
         this.observacao = observacao;
     }
 
-     public LocalDate getDataCadastro() {
-        return dataCadastro;
+     public LocalDate getDataCriacao() {
+        return dataCriacao;
      }
 
-     public void setDataCadastro(LocalDate dataCadastro) {
-        this.dataCadastro = dataCadastro;
+     public void setDataCriacao(LocalDate dataCriacao) {
+        this.dataCriacao = dataCriacao;
      }
 
 }

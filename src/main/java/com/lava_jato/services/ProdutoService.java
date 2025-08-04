@@ -39,7 +39,7 @@ public class ProdutoService {
         produto.setPrecoProduto(produtoDTO.getPrecoProduto());
         produto.setQuantidadeProduto(produtoDTO.getQuantidadeProduto());
         produto.setObservacao(produtoDTO.getObservacao());
-        produto.setDataCadastro(LocalDate.now());
+        produto.setDataCriacao(LocalDate.now());
 
         produtoRepository.save(produto);
         ProdutoResponseDTO produtoResponseDTO = produtoMapper.toResponseDTO(produto);
