@@ -3,6 +3,7 @@ package com.lava_jato.services;
 import com.lava_jato.entities.dto.request.DespesaDTO;
 import com.lava_jato.entities.dto.request.VeiculoDTO;
 import com.lava_jato.entities.dto.responses.DespesaResponseDTO;
+import com.lava_jato.entities.enums.StatusPagamento;
 import com.lava_jato.entities.mapstructs.DespesaMapper;
 import com.lava_jato.entities.model.caixa.Despesa;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
@@ -76,6 +77,10 @@ public class DespesaService {
     public void deleteById(Long despesaId) {
         Despesa despesa = findById(despesaId);
         despesaRepository.delete(despesa);
+    }
+
+    public List<Despesa> findAllDespesaByStatusPagamento(StatusPagamento statusPagamento){
+        return despesaRepository.findByStatusPagamento(statusPagamento);
     }
 
     private Despesa findById(Long despesaId){

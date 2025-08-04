@@ -10,4 +10,5 @@ import java.util.List;
 public interface AtendimentoRepository extends JpaRepository<Atendimento, Long> {
     List<Atendimento> findAllByArquivadoTrue();
     List<Atendimento> findAllByStatusAtendimentoAndArquivadoFalseAndStatusPagamento(StatusAtendimento statusAtendimento, StatusPagamento statusPagamento);
+    List<Atendimento> findByStatusPagamento(StatusPagamento statusPagamento);
 }

@@ -175,6 +175,10 @@ public class AtendimentoService {
         atendimentoRepository.delete(atendimento);
     }
 
+    public List<Atendimento> findAllAtendimentoByStatusPagamento(StatusPagamento statusPagamento){
+        return atendimentoRepository.findByStatusPagamento(statusPagamento);
+    }
+
     private Atendimento findById(Long atendimentoId){
         return atendimentoRepository.findById(atendimentoId).orElseThrow(() -> new ResourceNotFoundException("Atendimento não encontrado pelo id: " + atendimentoId));
     }
@@ -238,7 +242,7 @@ public class AtendimentoService {
 
         for(ProdutoAtendimentoDTO produtoAtendimentoDTO : atendimentoDTO.getProdutos()){
             Produto produto = produtoService.getProdutoByIdEntity(produtoAtendimentoDTO.getProdutoAtendimentoId());
-            BigDecimal subtotal = produto.getPrecoProduto().multiply(BigDecimal.valueOf(produtoAtendimentoDTO.getProdutoAtendimentoId()));
+            BigDecimal subtotal = produto.getPrecoProduto().multiply(BigDecimal.valueOf(produtoAtendimentoDTO.getQuantidadeProduto()));
             total = total.add(subtotal);
         }
         return total;
