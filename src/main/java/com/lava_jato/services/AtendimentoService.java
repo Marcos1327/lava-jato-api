@@ -71,8 +71,6 @@ public class AtendimentoService {
         return  atendimentoResponseDTO;
     }
 
-
-
     @Transactional
     public AtendimentoResponseDTO update(Long atendimentoId, AtendimentoDTO atendimentoDTO){
         Atendimento atendimento = findById(atendimentoId);
@@ -171,6 +169,9 @@ public class AtendimentoService {
 
     public void deleteById(Long atendimentoId) {
         Atendimento atendimento = findById(atendimentoId);
+        if(atendimento.getArquivado().equals(Boolean.TRUE)){
+            throw new BusinessException("Não é possivel deletar um atendimento arquivado.");
+        }
         atendimentoRepository.delete(atendimento);
     }
 
