@@ -2,7 +2,7 @@ package com.lava_jato.repositories;
 
 import com.lava_jato.entities.enums.StatusAtendimento;
 import com.lava_jato.entities.enums.StatusPagamento;
-import com.lava_jato.entities.model.Atendimento;
+import com.lava_jato.entities.model.atendimento.Atendimento;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

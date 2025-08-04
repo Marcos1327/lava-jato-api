@@ -1,8 +1,10 @@
-package com.lava_jato.entities.model;
+package com.lava_jato.entities.model.atendimento;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lava_jato.entities.enums.StatusAtendimento;
 import com.lava_jato.entities.enums.StatusPagamento;
+import com.lava_jato.entities.model.Cliente;
+import com.lava_jato.entities.model.Veiculo;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

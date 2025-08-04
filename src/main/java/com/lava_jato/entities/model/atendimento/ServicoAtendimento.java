@@ -1,5 +1,6 @@
-package com.lava_jato.entities.model;
+package com.lava_jato.entities.model.atendimento;
 
+import com.lava_jato.entities.model.TipoServico;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

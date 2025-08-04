@@ -1,9 +1,8 @@
 package com.lava_jato.entities.mapstructs;
 
-import com.lava_jato.entities.dto.request.PagamentoDTO;
 import com.lava_jato.entities.dto.responses.AtendimentoResponseDTO;
 import com.lava_jato.entities.dto.responses.PagamentoResponseDTO;
-import com.lava_jato.entities.model.Atendimento;
+import com.lava_jato.entities.model.atendimento.Atendimento;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
