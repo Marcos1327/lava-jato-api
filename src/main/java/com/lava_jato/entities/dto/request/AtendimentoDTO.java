@@ -1,5 +1,7 @@
 package com.lava_jato.entities.dto.request;
 
+import com.lava_jato.entities.enums.StatusAtendimento;
+
 import java.util.List;
 
 public class AtendimentoDTO {
@@ -9,6 +11,7 @@ public class AtendimentoDTO {
     private List<ServicoAtendimentoDTO> servicos;
     private List<ProdutoAtendimentoDTO> produtos;
     private PagamentoDTO pagamento;
+    private StatusAtendimento  statusAtendimento;
 
     public Long getClienteId() {
         return clienteId;
@@ -48,5 +51,13 @@ public class AtendimentoDTO {
 
     public void setPagamento(PagamentoDTO pagamento) {
         this.pagamento = pagamento;
+    }
+
+    public StatusAtendimento getStatusAtendimento() {
+        return statusAtendimento;
+    }
+
+    public void setStatusAtendimento(StatusAtendimento statusAtendimento) {
+        this.statusAtendimento = statusAtendimento;
     }
 }

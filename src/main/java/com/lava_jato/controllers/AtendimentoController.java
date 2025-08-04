@@ -6,6 +6,8 @@ import com.lava_jato.services.AtendimentoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/atendimentos")
 public class AtendimentoController {
@@ -19,6 +21,16 @@ public class AtendimentoController {
     @PostMapping("/create")
     public ResponseEntity<AtendimentoResponseDTO> create(@RequestBody AtendimentoDTO atendimentoDTO) {
         return ResponseEntity.ok(atendimentoService.create(atendimentoDTO));
+    }
+
+    @PatchMapping("/update/{atendimentoId}")
+    public ResponseEntity<AtendimentoResponseDTO> update(@PathVariable Long  atendimentoId, @RequestBody AtendimentoDTO atendimentoDTO) {
+        return ResponseEntity.ok(atendimentoService.update(atendimentoId, atendimentoDTO));
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<AtendimentoResponseDTO>> findAll() {
+        return ResponseEntity.ok(atendimentoService.findAll());
     }
 
     @GetMapping("/find-by-id/{atendimentoId}")

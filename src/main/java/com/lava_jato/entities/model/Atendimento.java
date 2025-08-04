@@ -18,7 +18,7 @@ public class Atendimento {
     private Long atendimentoId;
 
     @Enumerated(EnumType.STRING)
-    private StatusAtendimento statusAtendimento;
+    private StatusAtendimento statusAtendimento = StatusAtendimento.NA_FILA;
 
     @Enumerated(EnumType.STRING)
     private StatusPagamento statusPagamento;

@@ -10,12 +10,14 @@ import com.lava_jato.entities.model.*;
 import com.lava_jato.exceptions.handlers.BusinessException;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
 import com.lava_jato.repositories.AtendimentoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AtendimentoService {
@@ -38,6 +40,7 @@ public class AtendimentoService {
         this.atendimentoMapper = atendimentoMapper;
     }
 
+    @Transactional
     public AtendimentoResponseDTO create(AtendimentoDTO atendimentoDTO) {
         Atendimento atendimento = new Atendimento();
 
@@ -46,7 +49,6 @@ public class AtendimentoService {
 
         atendimento.setCliente(cliente);
         atendimento.setVeiculo(veiculo);
-        atendimento.setStatusAtendimento(StatusAtendimento.NA_FILA);
         atendimento.setDataCriacao(LocalDate.now());
 
         List<ServicoAtendimento> servicosAtendimento = criarServicosAtendimento(atendimentoDTO, atendimento);
@@ -63,6 +65,48 @@ public class AtendimentoService {
         AtendimentoResponseDTO atendimentoResponseDTO = atendimentoMapper.toResponseDTO(atendimento);
 
         return  atendimentoResponseDTO;
+    }
+
+    @Transactional
+    public AtendimentoResponseDTO update(Long atendimentoId, AtendimentoDTO atendimentoDTO){
+        Atendimento atendimento = findById(atendimentoId);
+
+        if(atendimentoDTO.getClienteId() != null) {
+            Cliente cliente = clienteService.getClienteByIdEntity(atendimentoDTO.getClienteId());
+            atendimento.setCliente(cliente);
+        }
+        if(atendimentoDTO.getVeiculoId() != null) {
+            Veiculo veiculo = veiculoService.getVeiculoByIdEntity(atendimentoDTO.getVeiculoId());
+            atendimento.setVeiculo(veiculo);
+        }
+        if(atendimentoDTO.getStatusAtendimento() != null) {
+            atendimento.setStatusAtendimento(atendimentoDTO.getStatusAtendimento());
+        }
+        if(atendimentoDTO.getPagamento() != null) {
+            atendimento.setStatusPagamento(atendimentoDTO.getPagamento().getStatusPagamento());
+        }
+        if(atendimentoDTO.getServicos() != null &&  !atendimentoDTO.getServicos().isEmpty()) {
+            atendimento.getServicos().clear();
+            List<ServicoAtendimento> servicosAtualizados = criarServicosAtendimento(atendimentoDTO, atendimento);
+            atendimento.setServicos(servicosAtualizados);
+        }
+        if(atendimentoDTO.getProdutos() != null &&  !atendimentoDTO.getProdutos().isEmpty()) {
+            atendimento.getProdutos().clear();
+            List<ProdutoAtendimento> produtosAtualizados =  criarProdutoAtendimento(atendimentoDTO, atendimento);
+            atendimento.setProdutos(produtosAtualizados);
+        }
+        if(atendimentoDTO.getProdutos() != null &&  !atendimentoDTO.getProdutos().isEmpty() || (atendimentoDTO.getServicos() != null && !atendimentoDTO.getServicos().isEmpty())) {
+           BigDecimal precoTotalAtualizado = calcularTotalServicos(atendimentoDTO).add(calcularTotalProdutos(atendimentoDTO));
+           atendimento.setPrecoTotal(precoTotalAtualizado);
+        }
+
+        atendimentoRepository.save(atendimento);
+        return atendimentoMapper.toResponseDTO(atendimento);
+    }
+
+    public List<AtendimentoResponseDTO> findAll() {
+        List<Atendimento> atendimentos = atendimentoRepository.findAll();
+        return atendimentos.stream().map(atendimentoMapper::toResponseDTO).collect(Collectors.toList());
     }
 
     public AtendimentoResponseDTO getById(Long atendimentoId) {
