@@ -188,7 +188,7 @@ public class AtendimentoService {
 
         for (ServicoAtendimentoDTO servicoDTO : atendimentoDTO.getServicos()) {
 
-            TipoServico tipoServico = tipoServicoService.getTipoServicoByIdEntity(servicoDTO.getServicoAtendimentoId());
+            TipoServico tipoServico = tipoServicoService.getTipoServicoByIdEntity(servicoDTO.getTipoServicoId());
 
             ServicoAtendimento servicoAtendimento = new ServicoAtendimento();
             servicoAtendimento.setServico(tipoServico);
@@ -207,7 +207,7 @@ public class AtendimentoService {
         List<ProdutoAtendimento> produtos = new ArrayList<>();
 
         for(ProdutoAtendimentoDTO produtoAtendimentoDTO : atendimentoDTO.getProdutos()){
-            Produto produto = produtoService.getProdutoByIdEntity(produtoAtendimentoDTO.getProdutoAtendimentoId());
+            Produto produto = produtoService.getProdutoByIdEntity(produtoAtendimentoDTO.getProdutoId());
             produtoService.consumirEstoque(produto, produtoAtendimentoDTO.getQuantidadeProduto());
 
             ProdutoAtendimento produtoAtendimento = new ProdutoAtendimento();
@@ -231,7 +231,7 @@ public class AtendimentoService {
         BigDecimal total = BigDecimal.ZERO;
 
         for(ServicoAtendimentoDTO servicoAtendimentoDTO : atendimentoDTO.getServicos()){
-            TipoServico servico = tipoServicoService.getTipoServicoByIdEntity(servicoAtendimentoDTO.getServicoAtendimentoId());
+            TipoServico servico = tipoServicoService.getTipoServicoByIdEntity(servicoAtendimentoDTO.getTipoServicoId());
             total = total.add(servico.getPrecoServico());
         }
         return total;
@@ -241,7 +241,7 @@ public class AtendimentoService {
         BigDecimal total = BigDecimal.ZERO;
 
         for(ProdutoAtendimentoDTO produtoAtendimentoDTO : atendimentoDTO.getProdutos()){
-            Produto produto = produtoService.getProdutoByIdEntity(produtoAtendimentoDTO.getProdutoAtendimentoId());
+            Produto produto = produtoService.getProdutoByIdEntity(produtoAtendimentoDTO.getProdutoId());
             BigDecimal subtotal = produto.getPrecoProduto().multiply(BigDecimal.valueOf(produtoAtendimentoDTO.getQuantidadeProduto()));
             total = total.add(subtotal);
         }

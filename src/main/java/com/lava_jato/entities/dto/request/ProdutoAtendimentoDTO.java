@@ -3,7 +3,7 @@ package com.lava_jato.entities.dto.request;
 import java.math.BigDecimal;
 
 public class ProdutoAtendimentoDTO {
-    private Long produtoAtendimentoId;
+    private Long produtoId;
     private String nome;
     private BigDecimal preco;
     private Integer quantidadeProduto;
@@ -11,19 +11,19 @@ public class ProdutoAtendimentoDTO {
     public ProdutoAtendimentoDTO() {
     }
 
-    public ProdutoAtendimentoDTO(Long produtoAtendimentoId, String nome, Integer quantidadeProduto, BigDecimal preco) {
-        this.produtoAtendimentoId = produtoAtendimentoId;
+    public ProdutoAtendimentoDTO(Long produtoId, String nome, Integer quantidadeProduto, BigDecimal preco) {
+        this.produtoId = produtoId;
         this.nome = nome;
         this.quantidadeProduto = quantidadeProduto;
         this.preco = preco;
     }
 
-    public Long getProdutoAtendimentoId() {
-        return produtoAtendimentoId;
+    public Long getProdutoId() {
+        return produtoId;
     }
 
-    public void setProdutoAtendimentoId(Long produtoAtendimentoId) {
-        this.produtoAtendimentoId = produtoAtendimentoId;
+    public void setProdutoId(Long produtoId) {
+        this.produtoId = produtoId;
     }
 
     public String getNome() {

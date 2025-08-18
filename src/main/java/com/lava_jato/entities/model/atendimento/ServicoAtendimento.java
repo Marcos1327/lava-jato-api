@@ -25,7 +25,7 @@ public class ServicoAtendimento {
     private Atendimento atendimento;
 
     @ManyToOne
-    @JoinColumn(name = "servico_id")
+    @JoinColumn(name = "tipo_servico_id")
     private TipoServico servico;
 
 
