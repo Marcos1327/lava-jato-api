@@ -6,15 +6,15 @@ import com.lava_jato.entities.mapstructs.VeiculoMapper;
 import com.lava_jato.entities.model.Veiculo;
 import com.lava_jato.exceptions.handlers.BusinessException;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
-import com.lava_jato.exceptions.handlers.ValidationException;
 import com.lava_jato.repositories.VeiculoRepository;
 import com.lava_jato.util.Util;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,7 +32,7 @@ public class VeiculoService {
 
     @Transactional
     public VeiculoResponseDTO createVeiculo(VeiculoDTO veiculoDTO){
-        validarCamposObrigatoriosVeiculo(veiculoDTO);
+        validarCamposObrigatorios(veiculoDTO);
         verificaSeExisteVeiculoPelaPlaca(veiculoDTO.getPlaca());
 
         Veiculo veiculo = new Veiculo();
@@ -91,33 +91,23 @@ public class VeiculoService {
         veiculoRepository.delete(veiculo);
     }
 
+    public Veiculo getVeiculoByIdEntity(Long veiculoId){
+        return findById(veiculoId);
+    }
     private void verificaSeExisteVeiculoPelaPlaca(String placa){
         if(veiculoRepository.existsVeiculoByPlaca(placa)) {
             throw new BusinessException("Já existe um veiculo com este Placa.");
         }
     }
-    public Veiculo getVeiculoByIdEntity(Long veiculoId){
-        return findById(veiculoId);
-    }
-
     private Veiculo findById(Long veiculoId){
         return veiculoRepository.findById(veiculoId).orElseThrow(() -> new ResourceNotFoundException("Veiculo não encontrato pelo id: " + veiculoId));
     }
-    private void validarCamposObrigatoriosVeiculo(VeiculoDTO veiculoDTO) {
-        List<String> camposObrigatorios = new ArrayList<>();
+    private void validarCamposObrigatorios(VeiculoDTO veiculoDTO) {
+        Map<String, Object> camposObrigatorios = new HashMap<>();
+        camposObrigatorios.put("Proprietario", veiculoDTO.getProprietarioId());
+        camposObrigatorios.put("Modelo", veiculoDTO.getModelo());
+        camposObrigatorios.put("Placa", veiculoDTO.getPlaca());
 
-        if (Util.isNullOrEmpty(veiculoDTO.getProprietarioId().toString())) {
-            camposObrigatorios.add("Proprietario");
-        }
-        if (Util.isNullOrEmpty(veiculoDTO.getModelo())) {
-            camposObrigatorios.add("Modelo");
-        }
-        if (Util.isNullOrEmpty(veiculoDTO.getPlaca())) {
-            camposObrigatorios.add("Placa");
-        }
-
-        if (!camposObrigatorios.isEmpty()) {
-            throw new ValidationException("Os seguintes campos são obrigatórios: " + String.join(", ", camposObrigatorios));
-        }
+        Util.validarCamposObrigatorios(camposObrigatorios);
     }
 }

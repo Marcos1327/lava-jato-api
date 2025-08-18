@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +32,7 @@ public class ProdutoService {
 
     @Transactional
     public ProdutoResponseDTO createProduto(ProdutoDTO produtoDTO){
-        validarCamposObrigatoriosProduto(produtoDTO);
+        validarCamposObrigatorios(produtoDTO);
         verificaSeExisteProdutoPeloNome(produtoDTO.getNomeProduto());
 
         Produto produto = new Produto();
@@ -108,21 +110,12 @@ public class ProdutoService {
             throw new BusinessException("Já existe um produto com esse nome: " + nomeProduto);
         }
     }
-    private void validarCamposObrigatoriosProduto(ProdutoDTO produtoDTO) {
-        List<String> camposObrigatorios = new ArrayList<>();
+    private void validarCamposObrigatorios(ProdutoDTO produtoDTO){
+        Map<String, Object> camposObrigatorios = new HashMap<>();
+        camposObrigatorios.put("Nome do produto", produtoDTO.getNomeProduto());
+        camposObrigatorios.put("Preço da Venda", produtoDTO.getPrecoProduto());
+        camposObrigatorios.put("Quantidade de Produto",  produtoDTO.getQuantidadeProduto());
 
-        if (Util.isNullOrEmpty(produtoDTO.getNomeProduto())){
-            camposObrigatorios.add("Nome do produto");
-        }
-        if (Util.isNullOrEmpty(produtoDTO.getPrecoProduto().toString())) {
-            camposObrigatorios.add("Preço da Venda");
-        }
-        if (Util.isNullOrEmpty(produtoDTO.getQuantidadeProduto().toString())) {
-            camposObrigatorios.add("Quantidade de Produto");
-        }
-
-        if (!camposObrigatorios.isEmpty()) {
-            throw new ValidationException("Os seguintes campos são obrigatórios: " + String.join(", ", camposObrigatorios));
-        }
+        Util.validarCamposObrigatorios(camposObrigatorios);
     }
 }

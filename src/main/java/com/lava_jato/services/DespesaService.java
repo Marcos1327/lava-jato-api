@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,7 +31,7 @@ public class DespesaService {
     }
 
     public DespesaResponseDTO create(DespesaDTO despesaDTO) {
-        validarCamposObrigatoriosDespesa(despesaDTO);
+        validarCamposObrigatorios(despesaDTO);
 
         Despesa despesa = new Despesa();
         despesa.setDescricao(despesaDTO.getDescricao());
@@ -86,24 +88,13 @@ public class DespesaService {
     private Despesa findById(Long despesaId){
         return despesaRepository.findById(despesaId).orElseThrow(() -> new ResourceNotFoundException("Despesa não encontrada pelo id: " +  despesaId));
     }
+    private void validarCamposObrigatorios(DespesaDTO despesaDTO) {
+        Map<String, Object> camposObrigatorios = new HashMap<>();
+        camposObrigatorios.put("Descrição", despesaDTO.getDescricao());
+        camposObrigatorios.put("Valor Despesa", despesaDTO.getValorDespesa());
+        camposObrigatorios.put("Status Pagamento",despesaDTO.getStatusPagamento());
+        camposObrigatorios.put("Data da Despesa", despesaDTO.getDataDespesa());
 
-    private void validarCamposObrigatoriosDespesa(DespesaDTO despesaDTO) {
-        List<String> camposObrigatorios = new ArrayList<>();
-
-        if (Util.isNullOrEmpty(despesaDTO.getDescricao())) {
-            camposObrigatorios.add("Descrição");
-        }
-        if (Util.isNullOrEmpty(despesaDTO.getValorDespesa())) {
-            camposObrigatorios.add("Valor Despesa");
-        }
-        if (Util.isNullOrEmpty(despesaDTO.getDataDespesa())) {
-            camposObrigatorios.add("Data Despesa");
-        }
-        if (Util.isNullOrEmpty(despesaDTO.getStatusPagamento())) {
-            camposObrigatorios.add("Status Pagamento");
-        }
-        if (!camposObrigatorios.isEmpty()) {
-            throw new ValidationException("Os seguintes campos são obrigatórios: " + String.join(", ", camposObrigatorios));
-        }
+        Util.validarCamposObrigatorios(camposObrigatorios);
     }
 }

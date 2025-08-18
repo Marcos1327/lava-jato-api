@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +35,7 @@ public class PessoaFisicaService {
 
     @Transactional
     public PessoaFisicaResponseDTO createPessoaFisica(PessoaFisicaDTO pessoaFisicaDTO) {
-        validarCamposObrigatoriosPessoaFisica(pessoaFisicaDTO);
+        validarCamposObrigatorios(pessoaFisicaDTO);
         Util.validarEmail(pessoaFisicaDTO.getEmail());
         verificaSeExisteClientePeloEmail(pessoaFisicaDTO.getEmail());
 
@@ -85,28 +87,17 @@ public class PessoaFisicaService {
     private PessoaFisica findPessoaFisicaById(Long clienteId){
         return pessoaFisicaRepository.findById(clienteId).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado pelo id: " + clienteId));
     }
-
     private void verificaSeExisteClientePeloEmail(String email) {
         if(clienteRepository.existsByEmail(email)) {
             throw new BusinessException("Já existe um cliente com este E-mail.");
         }
     }
+    private void validarCamposObrigatorios(PessoaFisicaDTO pessoaFisicaDTO) {
+        Map<String, Object> camposObrigatorios = new HashMap<>();
+        camposObrigatorios.put("Nome", pessoaFisicaDTO.getNome());
+        camposObrigatorios.put("Telefone", pessoaFisicaDTO.getTelefone());
+        camposObrigatorios.put("Email", pessoaFisicaDTO.getEmail());
 
-    private void validarCamposObrigatoriosPessoaFisica(PessoaFisicaDTO pessoaFisicaDTO) {
-        List<String> camposObrigatorios = new ArrayList<>();
-
-        if (Util.isNullOrEmpty(pessoaFisicaDTO.getNome())) {
-            camposObrigatorios.add("Nome");
-        }
-        if (Util.isNullOrEmpty(pessoaFisicaDTO.getTelefone())) {
-            camposObrigatorios.add("Telefone");
-        }
-        if (Util.isNullOrEmpty(pessoaFisicaDTO.getEmail())) {
-            camposObrigatorios.add("E-mail");
-        }
-
-        if (!camposObrigatorios.isEmpty()) {
-            throw new ValidationException("Os seguintes campos são obrigatórios: " + String.join(", ", camposObrigatorios));
-        }
+        Util.validarCamposObrigatorios(camposObrigatorios);
     }
 }

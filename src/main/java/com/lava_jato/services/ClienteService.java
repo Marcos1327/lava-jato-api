@@ -44,7 +44,6 @@ public class ClienteService {
 
     //TODO Criar uma busca por nome
     //TODO Criar uma busca por email
-    //TODO Criar DTO para resposta e não enviar a entidade diretamente
 
     private Cliente findClienteById(Long clienteId){
         return clienteRepository.findById(clienteId).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado pelo id: " + clienteId));

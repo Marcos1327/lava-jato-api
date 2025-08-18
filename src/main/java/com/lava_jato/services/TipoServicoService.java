@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +32,7 @@ public class TipoServicoService {
 
     @Transactional
     public TipoServicoResponseDTO create(TipoServicoDTO tipoServicoDTO) {
-        validarCamposObrigatoriosServico(tipoServicoDTO);
+        validarCamposObrigatorios(tipoServicoDTO);
         existTipoServicoByName(tipoServicoDTO.getNomeServico());
 
         TipoServico servico = new TipoServico();
@@ -95,18 +97,12 @@ public class TipoServicoService {
     private TipoServico findById(Long tipoServicoId) {
         return tipoServicoRepository.findById(tipoServicoId).orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrato pelo Id: " + tipoServicoId));
     }
+    private void validarCamposObrigatorios(TipoServicoDTO tipoServicoDTO) {
+        Map<String, Object> camposObrigatorios = new HashMap<>();
+        camposObrigatorios.put("Nome do Serviço", tipoServicoDTO.getNomeServico());
+        camposObrigatorios.put("Preço do Serviço", tipoServicoDTO.getPrecoServico());
 
-    private void validarCamposObrigatoriosServico(TipoServicoDTO tipoServicoDTO) {
-        List<String> camposObrigatorios = new ArrayList<>();
+        Util.validarCamposObrigatorios(camposObrigatorios);
 
-        if (Util.isNullOrEmpty(tipoServicoDTO.getNomeServico())){
-            camposObrigatorios.add("Nome do Serviço");
-        }
-        if (Util.isNullOrEmpty(tipoServicoDTO.getPrecoServico().toString())) {
-            camposObrigatorios.add("Preço do Serviço");
-        }
-        if (!camposObrigatorios.isEmpty()) {
-            throw new ValidationException("Os seguintes campos são obrigatórios: " + String.join(", ", camposObrigatorios));
-        }
     }
 }

@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +32,7 @@ public class FuncionarioService {
 
     @Transactional
     public FuncionarioResponseDTO create(FuncionarioDTO funcionarioDTO) {
-        validarCamposObrigatoriosFuncionario(funcionarioDTO);
+        validarCamposObrigatorios(funcionarioDTO);
         verificarSeExisteFuncionarioPeloNomeETelefone(funcionarioDTO.getNome(), funcionarioDTO.getTelefone());
 
         Funcionario funcionario = new Funcionario();
@@ -99,25 +101,14 @@ public class FuncionarioService {
        return funcionarioRepository.findById(funcionarioId).orElseThrow(() ->
                 new ResourceNotFoundException("Funcionário não encontrado pelo Id : " + funcionarioId));
     }
-    private void validarCamposObrigatoriosFuncionario(FuncionarioDTO funcionarioDTO) {
-        List<String> camposObrigatorios = new ArrayList<>();
+    private void validarCamposObrigatorios(FuncionarioDTO funcionarioDTO) {
+        Map<String, Object> camposObrigatorios = new HashMap<>();
+        camposObrigatorios.put("Nome", funcionarioDTO.getNome());
+        camposObrigatorios.put("Telefone",  funcionarioDTO.getTelefone());
+        camposObrigatorios.put("Função", funcionarioDTO.getCargo());
+        camposObrigatorios.put("Vínculo", funcionarioDTO.getIsTemporario());
 
-        if (Util.isNullOrEmpty(funcionarioDTO.getNome())) {
-            camposObrigatorios.add("Nome");
-        }
-        if (Util.isNullOrEmpty(funcionarioDTO.getTelefone())) {
-            camposObrigatorios.add("Telefone");
-        }
-        if (Util.isNullOrEmpty(funcionarioDTO.getCargo())) {
-            camposObrigatorios.add("Função");
-        }
-        if (Util.isNullOrEmpty(funcionarioDTO.getIsTemporario())) {
-            camposObrigatorios.add("Vínculo");
-        }
-
-        if (!camposObrigatorios.isEmpty()) {
-            throw new ValidationException("Os seguintes campos são obrigatórios: " + String.join(", ", camposObrigatorios));
-        }
+        Util.validarCamposObrigatorios(camposObrigatorios);
     }
     private void verificarSeExisteFuncionarioPeloNomeETelefone(String nome, String telefone){
         if(funcionarioRepository.existsFuncionarioByNomeAndTelefone(nome, telefone)){

@@ -6,7 +6,6 @@ import com.lava_jato.entities.mapstructs.PessoaJuridicaMapper;
 import com.lava_jato.entities.model.PessoaJuridica;
 import com.lava_jato.exceptions.handlers.BusinessException;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
-import com.lava_jato.exceptions.handlers.ValidationException;
 import com.lava_jato.repositories.ClienteRepository;
 import com.lava_jato.repositories.PessoaJuridicaRepository;
 import com.lava_jato.util.Util;
@@ -14,8 +13,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +33,7 @@ public class PessoaJuridicaService {
 
     @Transactional
     public PessoaJuridicaResponseDTO createPessoaJuridica(PessoaJuridicaDTO pessoaJuridicaDTO) {
-        validarCamposObrigatoriosPessoaJuridica(pessoaJuridicaDTO);
+        validarCamposObrigatorios(pessoaJuridicaDTO);
         Util.validarEmail(pessoaJuridicaDTO.getEmail());
         verificaSeExisteClientePeloEmail(pessoaJuridicaDTO.getEmail());
 
@@ -97,26 +97,13 @@ public class PessoaJuridicaService {
             throw new BusinessException("Já existe um cliente com este E-mail.");
         }
     }
+    private void validarCamposObrigatorios(PessoaJuridicaDTO pessoaJuridicaDTO) {
+        Map<String, Object> camposObrigatorios = new HashMap<>();
+        camposObrigatorios.put("Nome da Empresa", pessoaJuridicaDTO.getNomeEmpresa());
+        camposObrigatorios.put("Nome do Responsavel", pessoaJuridicaDTO.getNomeResponsavel());
+        camposObrigatorios.put("Telefone", pessoaJuridicaDTO.getTelefone());
+        camposObrigatorios.put("Email", pessoaJuridicaDTO.getEmail());
 
-    private void validarCamposObrigatoriosPessoaJuridica(PessoaJuridicaDTO pessoaJuridicaDTO) {
-        List<String> camposObrigatorios = new ArrayList<>();
-
-        if (Util.isNullOrEmpty(pessoaJuridicaDTO.getNomeEmpresa())) {
-            camposObrigatorios.add("Nome da Empresa");
-        }
-
-        if (Util.isNullOrEmpty(pessoaJuridicaDTO.getNomeResponsavel())) {
-            camposObrigatorios.add("Nome do Responsavel");
-        }
-        if (Util.isNullOrEmpty(pessoaJuridicaDTO.getTelefone())) {
-            camposObrigatorios.add("Telefone");
-        }
-        if (Util.isNullOrEmpty(pessoaJuridicaDTO.getEmail())) {
-            camposObrigatorios.add("E-mail");
-        }
-
-        if (!camposObrigatorios.isEmpty()) {
-            throw new ValidationException("Os seguintes campos são obrigatórios: " + String.join(", ", camposObrigatorios));
-        }
+        Util.validarCamposObrigatorios(camposObrigatorios);
     }
 }
