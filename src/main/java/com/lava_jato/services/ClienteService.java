@@ -6,10 +6,9 @@ import com.lava_jato.entities.model.Cliente;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
 import com.lava_jato.repositories.ClienteRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ClienteService {
@@ -31,9 +30,14 @@ public class ClienteService {
         return findClienteById(clienteId);
     }
 
-    public List<ClienteResumoDTO> findAllClientes() {
-        List<Cliente> clientes = clienteRepository.findAll();
-        return clientes.stream().map(clienteMapper::toResumoDTO).collect(Collectors.toList());
+//    public List<ClienteResumoDTO> findAllClientes() {
+//        List<Cliente> clientes = clienteRepository.findAll();
+//        return clientes.stream().map(clienteMapper::toResumoDTO).collect(Collectors.toList());
+//    }
+
+    public Page<ClienteResumoDTO> findAllClientes(Pageable pageable) {
+        Page<Cliente> clientes = clienteRepository.findAll(pageable);
+        return clientes.map(clienteMapper::toResumoDTO);
     }
 
     @Transactional

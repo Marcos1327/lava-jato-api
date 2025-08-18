@@ -7,7 +7,10 @@ import com.lava_jato.entities.dto.responses.AtendimentoResponseDTO;
 import com.lava_jato.entities.enums.StatusAtendimento;
 import com.lava_jato.entities.enums.StatusPagamento;
 import com.lava_jato.entities.mapstructs.AtendimentoMapper;
-import com.lava_jato.entities.model.*;
+import com.lava_jato.entities.model.Cliente;
+import com.lava_jato.entities.model.Produto;
+import com.lava_jato.entities.model.TipoServico;
+import com.lava_jato.entities.model.Veiculo;
 import com.lava_jato.entities.model.atendimento.Atendimento;
 import com.lava_jato.entities.model.atendimento.ProdutoAtendimento;
 import com.lava_jato.entities.model.atendimento.ServicoAtendimento;
@@ -15,13 +18,14 @@ import com.lava_jato.exceptions.handlers.BusinessException;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
 import com.lava_jato.repositories.AtendimentoRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AtendimentoService {
@@ -152,14 +156,14 @@ public class AtendimentoService {
         atendimentoRepository.saveAll(arquivados);
     }
 
-    public List<AtendimentoResponseDTO> findAllAtendimentosArquivados(){
-        List<Atendimento> atendimentosArquivados = atendimentoRepository.findAllByArquivadoTrue();
-        return atendimentosArquivados.stream().map(atendimentoMapper::toResponseDTO).collect(Collectors.toList());
+    public Page<AtendimentoResponseDTO> findAllAtendimentosArquivados(Pageable pageable){
+        Page<Atendimento> atendimentosArquivados = atendimentoRepository.findAllByArquivadoTrue(pageable);
+        return atendimentosArquivados.map(atendimentoMapper::toResponseDTO);
     }
 
-    public List<AtendimentoResponseDTO> findAll() {
-        List<Atendimento> atendimentos = atendimentoRepository.findAll();
-        return atendimentos.stream().map(atendimentoMapper::toResponseDTO).collect(Collectors.toList());
+    public Page<AtendimentoResponseDTO> findAll(Pageable pageable) {
+        Page<Atendimento> atendimentos = atendimentoRepository.findAll(pageable);
+        return atendimentos.map(atendimentoMapper::toResponseDTO);
     }
 
     public AtendimentoResponseDTO getById(Long atendimentoId) {

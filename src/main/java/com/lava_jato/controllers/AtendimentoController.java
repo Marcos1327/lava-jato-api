@@ -3,10 +3,10 @@ package com.lava_jato.controllers;
 import com.lava_jato.entities.dto.request.AtendimentoDTO;
 import com.lava_jato.entities.dto.responses.AtendimentoResponseDTO;
 import com.lava_jato.services.AtendimentoService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/atendimentos")
@@ -40,8 +40,8 @@ public class AtendimentoController {
     }
 
     @GetMapping("/arquivados")
-    public ResponseEntity<List<AtendimentoResponseDTO>> arquivados(){
-        return ResponseEntity.ok(atendimentoService.findAllAtendimentosArquivados());
+    public ResponseEntity<Page<AtendimentoResponseDTO>> arquivados(Pageable pageable){
+        return ResponseEntity.ok(atendimentoService.findAllAtendimentosArquivados(pageable));
     }
 
     @PatchMapping("/desarquivar/{atendimentoId}")
@@ -57,8 +57,8 @@ public class AtendimentoController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<AtendimentoResponseDTO>> findAll() {
-        return ResponseEntity.ok(atendimentoService.findAll());
+    public ResponseEntity<Page<AtendimentoResponseDTO>> findAll(Pageable pageable) {
+        return ResponseEntity.ok(atendimentoService.findAll(pageable));
     }
 
     @GetMapping("/find-by-id/{atendimentoId}")

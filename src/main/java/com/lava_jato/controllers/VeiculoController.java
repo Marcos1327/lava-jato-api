@@ -3,10 +3,10 @@ package com.lava_jato.controllers;
 import com.lava_jato.entities.dto.request.VeiculoDTO;
 import com.lava_jato.entities.dto.responses.VeiculoResponseDTO;
 import com.lava_jato.services.VeiculoService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/veiculos")
@@ -34,8 +34,8 @@ public class VeiculoController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<VeiculoResponseDTO>> findAll(){
-        return ResponseEntity.ok(veiculoService.findAllVeiculos());
+    public ResponseEntity<Page<VeiculoResponseDTO>> findAll(Pageable pageable){
+        return ResponseEntity.ok(veiculoService.findAllVeiculos(pageable));
     }
 
     @DeleteMapping("/delete/{veiculoId}")

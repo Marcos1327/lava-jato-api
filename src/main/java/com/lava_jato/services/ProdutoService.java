@@ -6,18 +6,16 @@ import com.lava_jato.entities.mapstructs.ProdutoMapper;
 import com.lava_jato.entities.model.Produto;
 import com.lava_jato.exceptions.handlers.BusinessException;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
-import com.lava_jato.exceptions.handlers.ValidationException;
 import com.lava_jato.repositories.ProdutoRepository;
 import com.lava_jato.util.Util;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class ProdutoService {
@@ -70,9 +68,9 @@ public class ProdutoService {
         return produtoResponseDTO;
     }
 
-    public List<ProdutoResponseDTO> findAll(){
-        List<Produto> produtos = produtoRepository.findAll();
-        return produtos.stream().map(produtoMapper::toResponseDTO).collect(Collectors.toList());
+    public Page<ProdutoResponseDTO> findAll(Pageable pageable){
+        Page<Produto> produtos = produtoRepository.findAll(pageable);
+        return produtos.map(produtoMapper::toResponseDTO);
     }
 
     public ProdutoResponseDTO getById(Long produtoId){

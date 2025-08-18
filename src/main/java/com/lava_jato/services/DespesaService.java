@@ -1,23 +1,21 @@
 package com.lava_jato.services;
 
 import com.lava_jato.entities.dto.request.DespesaDTO;
-import com.lava_jato.entities.dto.request.VeiculoDTO;
 import com.lava_jato.entities.dto.responses.DespesaResponseDTO;
 import com.lava_jato.entities.enums.StatusPagamento;
 import com.lava_jato.entities.mapstructs.DespesaMapper;
 import com.lava_jato.entities.model.caixa.Despesa;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
-import com.lava_jato.exceptions.handlers.ValidationException;
 import com.lava_jato.repositories.DespesaRepository;
 import com.lava_jato.util.Util;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class DespesaService {
@@ -66,9 +64,9 @@ public class DespesaService {
         return despesaMapper.toResponseDTO(despesa);
     }
 
-    public List<DespesaResponseDTO> findAll() {
-        List<Despesa> despesas = despesaRepository.findAll();
-        return despesas.stream().map(despesaMapper::toResponseDTO).collect(Collectors.toList());
+    public Page<DespesaResponseDTO> findAll(Pageable pageable) {
+        Page<Despesa> despesas = despesaRepository.findAll(pageable);
+        return despesas.map(despesaMapper::toResponseDTO);
     }
 
     public DespesaResponseDTO getById(Long despesaId) {

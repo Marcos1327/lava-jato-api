@@ -3,10 +3,10 @@ package com.lava_jato.controllers;
 import com.lava_jato.entities.dto.request.FuncionarioDTO;
 import com.lava_jato.entities.dto.responses.FuncionarioResponseDTO;
 import com.lava_jato.services.FuncionarioService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/funcionarios")
@@ -29,8 +29,8 @@ public class FuncionarioController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<FuncionarioResponseDTO>> findAll() {
-        return  ResponseEntity.ok(funcionarioService.findAll());
+    public ResponseEntity<Page<FuncionarioResponseDTO>> findAll(Pageable pageable) {
+        return  ResponseEntity.ok(funcionarioService.findAll(pageable));
     }
 
     @GetMapping("/find-by-id/{funcionarioId}")

@@ -8,6 +8,8 @@ import com.lava_jato.entities.dto.responses.PessoaJuridicaResponseDTO;
 import com.lava_jato.services.ClienteService;
 import com.lava_jato.services.PessoaFisicaService;
 import com.lava_jato.services.PessoaJuridicaService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,8 +45,8 @@ public class ClienteController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<ClienteResumoDTO>> findAllClientes(){
-        return ResponseEntity.ok(clienteService.findAllClientes());
+    public ResponseEntity<Page<ClienteResumoDTO>> findAllClientes(Pageable pageable){
+        return ResponseEntity.ok(clienteService.findAllClientes(pageable));
     }
 
     @GetMapping("/find-all-pf")

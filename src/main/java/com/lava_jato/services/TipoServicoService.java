@@ -6,18 +6,16 @@ import com.lava_jato.entities.mapstructs.TipoServicoMapper;
 import com.lava_jato.entities.model.TipoServico;
 import com.lava_jato.exceptions.handlers.BusinessException;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
-import com.lava_jato.exceptions.handlers.ValidationException;
 import com.lava_jato.repositories.TipoServicoRepository;
 import com.lava_jato.util.Util;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class TipoServicoService {
@@ -69,9 +67,9 @@ public class TipoServicoService {
         return responseDTO;
     }
 
-    public List<TipoServicoResponseDTO> findAll() {
-        List<TipoServico> servicos = tipoServicoRepository.findAll();
-        return servicos.stream().map(tipoServicoMapper::toResponseDTO).collect(Collectors.toList());
+    public Page<TipoServicoResponseDTO> findAll(Pageable pageable) {
+        Page<TipoServico> servicos = tipoServicoRepository.findAll(pageable);
+        return  servicos.map(tipoServicoMapper::toResponseDTO);
     }
 
     public TipoServicoResponseDTO getById(Long tipoServicoId){

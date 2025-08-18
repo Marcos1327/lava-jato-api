@@ -3,10 +3,10 @@ package com.lava_jato.controllers;
 import com.lava_jato.entities.dto.request.TipoServicoDTO;
 import com.lava_jato.entities.dto.responses.TipoServicoResponseDTO;
 import com.lava_jato.services.TipoServicoService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/servicos")
@@ -29,8 +29,8 @@ public class TipoServicoController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<TipoServicoResponseDTO>> findAll(){
-        return ResponseEntity.ok(tipoServicoService.findAll());
+    public ResponseEntity<Page<TipoServicoResponseDTO>> findAll(Pageable pageable){
+        return ResponseEntity.ok(tipoServicoService.findAll(pageable));
     }
 
     @GetMapping("/find-by-id/{tipoServicoId}")

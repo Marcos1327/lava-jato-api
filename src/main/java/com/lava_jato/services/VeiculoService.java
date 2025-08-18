@@ -2,20 +2,22 @@ package com.lava_jato.services;
 
 import com.lava_jato.entities.dto.request.VeiculoDTO;
 import com.lava_jato.entities.dto.responses.VeiculoResponseDTO;
+import com.lava_jato.entities.mapstructs.FuncionarioMapper;
 import com.lava_jato.entities.mapstructs.VeiculoMapper;
 import com.lava_jato.entities.model.Veiculo;
 import com.lava_jato.exceptions.handlers.BusinessException;
 import com.lava_jato.exceptions.handlers.ResourceNotFoundException;
+import com.lava_jato.repositories.FuncionarioRepository;
 import com.lava_jato.repositories.VeiculoRepository;
 import com.lava_jato.util.Util;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class VeiculoService {
@@ -24,7 +26,7 @@ public class VeiculoService {
     private final ClienteService clienteService;
     private final VeiculoMapper veiculoMapper;
 
-    public VeiculoService(VeiculoRepository veiculoRepository, ClienteService clienteService, VeiculoMapper veiculoMapper) {
+    public VeiculoService(VeiculoRepository veiculoRepository, ClienteService clienteService, VeiculoMapper veiculoMapper, FuncionarioRepository funcionarioRepository, FuncionarioMapper funcionarioMapper) {
         this.veiculoRepository = veiculoRepository;
         this.clienteService = clienteService;
         this.veiculoMapper = veiculoMapper;
@@ -74,10 +76,9 @@ public class VeiculoService {
         return veiculoResponseDTO;
     }
 
-    public List<VeiculoResponseDTO> findAllVeiculos(){
-        List<Veiculo> veiculos = veiculoRepository.findAll();
-        List<VeiculoResponseDTO> veiculosResponseDTO = veiculos.stream().map(veiculoMapper::toResponseDTO).collect(Collectors.toList());
-        return veiculosResponseDTO;
+    public Page<VeiculoResponseDTO> findAllVeiculos(Pageable pageable){
+        Page<Veiculo> veiculos = veiculoRepository.findAll(pageable);
+        return veiculos.map(veiculoMapper::toResponseDTO);
     }
 
     public VeiculoResponseDTO getById(long veiculoId){
