@@ -115,7 +115,7 @@ public class AtendimentoService {
     public AtendimentoResponseDTO arquivarAtendimento(Long atendimentoId){
         Atendimento atendimento = findById(atendimentoId);
 
-        if(!atendimento.getStatusAtendimento().equals(StatusAtendimento.FINALIZADO) && atendimento.getStatusPagamento().equals(StatusPagamento.PAGO)) {
+        if(!atendimento.getStatusAtendimento().equals(StatusAtendimento.FINALIZADO) && !atendimento.getStatusPagamento().equals(StatusPagamento.PAGO)) {
             throw new BusinessException("Só é possivel arquivar atendimentos finalizados e pagos .");
         }
         atendimento.setArquivado(true);
@@ -140,7 +140,7 @@ public class AtendimentoService {
     public void desarquivarAtendimento(Long atendimentoId){
         Atendimento atendimento = findById(atendimentoId);
 
-        if(atendimento.getArquivado().equals(Boolean.TRUE)){
+        if(atendimento.getArquivado()){
             atendimento.setArquivado(false);
         }
         atendimentoRepository.save(atendimento);

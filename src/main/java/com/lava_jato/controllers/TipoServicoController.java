@@ -33,7 +33,7 @@ public class TipoServicoController {
         return ResponseEntity.ok(tipoServicoService.findAll(pageable));
     }
 
-    @GetMapping("/find-by-id/{tipoServicoId}")
+    @GetMapping("/{tipoServicoId}")
     public ResponseEntity<TipoServicoResponseDTO> findById(@PathVariable Long tipoServicoId){
         return ResponseEntity.ok(tipoServicoService.getById(tipoServicoId));
     }

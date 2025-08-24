@@ -28,7 +28,7 @@ public class VeiculoController {
         return ResponseEntity.ok(veiculoService.updateVeiculo(veiculoId, veiculoDTO));
     }
 
-    @GetMapping("/find-by-id/{veiculoId}")
+    @GetMapping("/{veiculoId}")
     public ResponseEntity<VeiculoResponseDTO> findById(@PathVariable Long veiculoId){
         return ResponseEntity.ok(veiculoService.getById(veiculoId));
     }

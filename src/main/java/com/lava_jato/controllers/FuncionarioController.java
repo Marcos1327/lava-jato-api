@@ -33,7 +33,7 @@ public class FuncionarioController {
         return  ResponseEntity.ok(funcionarioService.findAll(pageable));
     }
 
-    @GetMapping("/find-by-id/{funcionarioId}")
+    @GetMapping("/{funcionarioId}")
     public ResponseEntity<FuncionarioResponseDTO> findById(@PathVariable Long funcionarioId) {
         return ResponseEntity.ok(funcionarioService.getById(funcionarioId));
     }

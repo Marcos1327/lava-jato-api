@@ -33,7 +33,7 @@ public class DespesaController {
         return ResponseEntity.ok(despesaService.findAll(pageable));
     }
 
-    @GetMapping("/find-by-id/{despesaId}")
+    @GetMapping("/{despesaId}")
     public ResponseEntity<DespesaResponseDTO> findById(@PathVariable Long despesaId){
         return ResponseEntity.ok(despesaService.getById(despesaId));
     }

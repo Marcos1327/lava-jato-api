@@ -61,7 +61,7 @@ public class AtendimentoController {
         return ResponseEntity.ok(atendimentoService.findAll(pageable));
     }
 
-    @GetMapping("/find-by-id/{atendimentoId}")
+    @GetMapping("/{atendimentoId}")
     public ResponseEntity<AtendimentoResponseDTO> findById(@PathVariable Long atendimentoId){
         return ResponseEntity.ok(atendimentoService.getById(atendimentoId));
     }

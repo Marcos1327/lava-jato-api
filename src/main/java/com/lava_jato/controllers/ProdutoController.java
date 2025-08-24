@@ -39,7 +39,7 @@ public class ProdutoController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/find-by-id/{produtoId}")
+    @GetMapping("/{produtoId}")
     public ResponseEntity<ProdutoResponseDTO> findById(@PathVariable Long produtoId){
         return ResponseEntity.ok(produtoService.getById(produtoId));
     }

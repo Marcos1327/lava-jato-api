@@ -39,7 +39,7 @@ public class ClienteController {
         return ResponseEntity.ok(pessoaJuridicaService.createPessoaJuridica(pessoaJuridicaDTO));
     }
 
-    @GetMapping("/findById/{clienteId}")
+    @GetMapping("/{clienteId}")
     public ResponseEntity<ClienteResumoDTO> findClienteById(@PathVariable("clienteId") Long clienteId){
          return ResponseEntity.ok(clienteService.getClienteById(clienteId));
     }
